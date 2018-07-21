@@ -36,6 +36,8 @@ fun createOkHttpClient(isInternetAvailable: () -> Boolean): OkHttpClient =
 
 fun networkCheckInterceptor(isInternetAvailable: () -> Boolean) = Interceptor { chain ->
     chain.run {
+//        println(this.proceed(request()).header("Link"))
+        // next...?
         if (!isInternetAvailable()) {
             throw NoNetworkException()
         }
