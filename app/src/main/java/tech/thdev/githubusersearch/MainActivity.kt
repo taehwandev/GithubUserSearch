@@ -1,24 +1,20 @@
 package tech.thdev.githubusersearch
 
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import androidx.appcompat.app.AppCompatActivity
+import android.support.design.widget.BottomNavigationView
+import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
-            R.id.navigation_home -> {
-                message.setText(R.string.title_home)
+            R.id.navigation_search -> {
+                message.setText(R.string.title_search)
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_dashboard -> {
-                message.setText(R.string.title_dashboard)
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_notifications -> {
-                message.setText(R.string.title_notifications)
+            R.id.navigation_liked -> {
+                message.setText(R.string.title_liked)
                 return@OnNavigationItemSelectedListener true
             }
         }

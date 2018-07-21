@@ -1,18 +1,18 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "tech.thdev.githubusersearch"
-        minSdkVersion 28
+        minSdkVersion 15
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -20,15 +20,45 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.0-alpha1'
-    implementation 'com.google.android.material:material:1.0.0-alpha1'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
+
+    implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:design:$rootProject.supportLibraryVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintVersion"
+    implementation "android.arch.lifecycle:extensions:$rootProject.lifecycleVersion"
+    implementation "androidx.core:core-ktx:$rootProject.ktxVersion"
+
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+
+    implementation "com.squareup.okhttp3:okhttp:$rootProject.okhttpVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpVersion"
+
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
+    // Because RxAndroid releases are few and far between, it is recommended you also
+    // explicitly depend on RxJava's latest version for bug fixes and new features.
+    // (see https://github.com/ReactiveX/RxJava/releases for latest 2.x.x version)
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxJavaVersion"
+
+    implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
+    kapt "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
+
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.0-alpha3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha3'
+    androidTestImplementation "androidx.test:runner:$rootProject.testRunner"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoCore"
+
+    // Optional -- Mockito framework
+    testImplementation "org.mockito:mockito-core:$rootProject.mockito"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$rootProject.mockitoKotlin"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$rootProject.kotlin_version"
 }
