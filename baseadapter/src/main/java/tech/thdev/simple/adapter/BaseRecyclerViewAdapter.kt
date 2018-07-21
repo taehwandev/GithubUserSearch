@@ -7,7 +7,6 @@ import tech.thdev.simple.adapter.data.source.AdapterRepositoryInterface
 import tech.thdev.simple.adapter.holder.BaseViewHolder
 import tech.thdev.simple.adapter.viewmodel.BaseAdapterViewModel
 
-@Suppress("UNCHECKED_CAST")
 abstract class BaseRecyclerViewAdapter<VIEW_MODEL : BaseAdapterViewModel>(
         createViewModel: (adapterRepository: AdapterRepositoryInterface) -> VIEW_MODEL) :
         RecyclerView.Adapter<BaseViewHolder<*, VIEW_MODEL>>() {

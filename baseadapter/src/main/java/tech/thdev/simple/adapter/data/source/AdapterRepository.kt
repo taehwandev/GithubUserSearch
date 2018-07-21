@@ -2,7 +2,6 @@ package tech.thdev.simple.adapter.data.source
 
 import tech.thdev.simple.adapter.data.BaseAdapterItem
 
-@Suppress("UNCHECKED_CAST")
 class AdapterRepository : BaseAdapterRepository<BaseAdapterItem.DefaultAdapterItem>() {
 
     override fun getItemViewType(position: Int): Int =
