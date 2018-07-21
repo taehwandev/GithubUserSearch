@@ -2,6 +2,10 @@
 
 buildscript {
     ext {
+        compileSdkVersion = 28
+        minSdkVersion = 15
+        targetSdkVersion = 28
+
         supportLibraryVersion = '28.0.0-alpha3'
         constraintVersion = '1.1.2'
 
