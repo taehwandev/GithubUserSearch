@@ -3,4 +3,5 @@
 
     <string name="title_search">Search</string>
     <string name="title_liked">Liked</string>
+    <string name="search_hint">Search github user name</string>
 </resources>

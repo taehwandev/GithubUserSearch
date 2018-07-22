@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
+    android:paddingStart="@dimen/item_user_padding"
+    android:paddingTop="@dimen/item_user_padding"
+    android:paddingEnd="@dimen/item_user_padding">
+
+    <ImageView
+        android:id="@+id/img_user_picture"
+        android:layout_width="@dimen/item_user_picture_size"
+        android:layout_height="@dimen/item_user_picture_size"
+        android:scaleType="centerCrop"
+        android:tint="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toTopOf="@+id/view_divider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
+
+    <TextView
+        android:id="@+id/tv_user_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/item_user_padding"
+        android:layout_marginLeft="@dimen/item_user_padding"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textSize="@dimen/item_user_name_text_size"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tv_user_score"
+        app:layout_constraintEnd_toStartOf="@+id/img_user_like"
+        app:layout_constraintStart_toEndOf="@+id/img_user_picture"
+        app:layout_constraintTop_toTopOf="@+id/img_user_picture"
+        tools:text="User name...." />
+
+    <TextView
+        android:id="@+id/tv_user_score"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/item_user_padding"
+        android:layout_marginLeft="@dimen/item_user_padding"
+        android:textSize="@dimen/item_user_score_text_size"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="@+id/img_user_picture"
+        app:layout_constraintEnd_toStartOf="@+id/img_user_like"
+        app:layout_constraintStart_toEndOf="@+id/img_user_picture"
+        app:layout_constraintTop_toBottomOf="@+id/tv_user_name"
+        tools:text="User score : 96.88" />
+
+    <ImageView
+        android:id="@+id/img_user_like"
+        android:layout_width="@dimen/item_user_like_button"
+        android:layout_height="@dimen/item_user_like_button"
+        app:layout_constraintBottom_toTopOf="@+id/view_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_divider_size"
+        android:layout_marginTop="@dimen/item_user_padding"
+        android:background="@color/colorBottomUserDivider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_user_picture" />
+</android.support.constraint.ConstraintLayout>
