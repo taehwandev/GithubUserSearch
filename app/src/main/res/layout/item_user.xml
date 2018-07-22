@@ -14,7 +14,6 @@
         android:layout_width="@dimen/item_user_picture_size"
         android:layout_height="@dimen/item_user_picture_size"
         android:scaleType="centerCrop"
-        android:tint="@color/colorPrimaryDark"
         app:layout_constraintBottom_toTopOf="@+id/view_divider"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -56,7 +55,8 @@
         android:layout_height="@dimen/item_user_like_button"
         app:layout_constraintBottom_toTopOf="@+id/view_divider"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/select_favorite_icon" />
 
     <View
         android:id="@+id/view_divider"

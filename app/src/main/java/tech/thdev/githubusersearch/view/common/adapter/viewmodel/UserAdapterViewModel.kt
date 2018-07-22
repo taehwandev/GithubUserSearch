@@ -1,8 +1,28 @@
 package tech.thdev.githubusersearch.view.common.adapter.viewmodel
 
-import tech.thdev.simple.adapter.data.source.AdapterRepository
+import tech.thdev.githubusersearch.data.GithubUser
+import tech.thdev.simple.adapter.data.source.AdapterRepositoryInterface
+import tech.thdev.simple.adapter.util.cast
 import tech.thdev.simple.adapter.viewmodel.BaseAdapterViewModel
 
-class UserAdapterViewModel(adapterRepository: AdapterRepository) : BaseAdapterViewModel(adapterRepository) {
+class UserAdapterViewModel(adapterRepository: AdapterRepositoryInterface) : BaseAdapterViewModel(adapterRepository) {
 
+    companion object {
+        const val VIEW_TYPE_SECTION = 1000
+        const val VIEW_TYPE_ITEM = 2000
+    }
+
+    lateinit var onLikeUserInfo: (item: GithubUser) -> Unit
+
+    lateinit var onUnlikeUserInfo: (item: GithubUser) -> Unit
+
+    fun onClickUserItem(adapterPosition: Int) {
+        adapterRepository.getItem(adapterPosition).cast<GithubUser>()?.let {
+            if (it.isLike) {
+                onUnlikeUserInfo(it)
+            } else {
+                onLikeUserInfo(it)
+            }
+        }
+    }
 }

@@ -10,4 +10,6 @@
     <dimen name="item_user_name_text_size">25sp</dimen>
     <dimen name="item_user_score_text_size">16sp</dimen>
     <dimen name="item_user_section_text_size">20sp</dimen>
+
+    <dimen name="error_message_text_size">30sp</dimen>
 </resources>

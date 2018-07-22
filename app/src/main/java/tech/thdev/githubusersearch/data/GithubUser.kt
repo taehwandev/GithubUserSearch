@@ -21,4 +21,6 @@ data class GithubUser(
         @SerializedName("received_events_url") val receivedEventsUrl: String,
         @SerializedName("type") val type: String,
         @SerializedName("site_admin") val siteAdmin: Boolean,
-        @SerializedName("score") val score: Double)
+        @SerializedName("score") val score: Double) {
+    var isLike = false
+}

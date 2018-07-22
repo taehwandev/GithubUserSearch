@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
             (menu?.findItem(R.id.menu_search)?.actionView as SearchView).run {
                 queryHint = getString(R.string.search_hint)
                 setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                    override fun onQueryTextSubmit(p0: String?): Boolean {
+                    override fun onQueryTextSubmit(query: String?): Boolean {
                         return false
                     }
 

@@ -39,10 +39,10 @@ fun networkCheckInterceptor(isInternetAvailable: () -> Boolean) = Interceptor { 
 //        println(this.proceed(request()).header("Link"))
         // next...?
         if (!isInternetAvailable()) {
-            throw NoNetworkException()
+            throw NoNetworkException("Is not available network!!!")
         }
         proceed(chain.request())
     }
 }
 
-class NoNetworkException : Throwable()
+class NoNetworkException(message: String) : Throwable(message)
