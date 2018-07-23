@@ -22,7 +22,7 @@
         <item name="android:textSize">@dimen/fab_label_text_size</item>
         <item name="android:padding">@dimen/fab_label_padding</item>
         <item name="android:layout_margin">@dimen/fab_label_end_margin</item>
-        <item name="android:background">@drawable/fab_label_background</item>
+        <item name="android:background">@drawable/bg_fab_label_background</item>
     </style>
 
     <style name="FloatingActionButtonLabel.Default" parent="FloatingActionButtonLabel" />

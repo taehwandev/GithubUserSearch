@@ -39,6 +39,8 @@ class GithubUserFragmentViewModel(private val viewType: Int,
     private var prevSelectFilterType = FilterStatusViewModel.FilterType.FILTER_SORT_DEFAULT
     private var prevSearchQuery: String = ""
 
+    lateinit var noSearchItem: () -> Unit
+
     private val TAG = this.javaClass.simpleName
     private val perPage = 50
 
@@ -57,6 +59,13 @@ class GithubUserFragmentViewModel(private val viewType: Int,
                     }
                 }
                 .filter {
+                    if (it.third.size == 0 && it.first.isNotEmpty()) {
+                        uiThreadSubject.onNext {
+                            if (::noSearchItem.isInitialized) {
+                                noSearchItem()
+                            }
+                        }
+                    }
                     it.third.size > 0
                 }
                 .map { (_, filterType, userList) ->
@@ -68,15 +77,35 @@ class GithubUserFragmentViewModel(private val viewType: Int,
                             userList.sortBy { it.id }
                         }
                     }
-                    userList
+                    Pair(filterType, userList)
                 }
                 .observeOn(AndroidSchedulers.mainThread())
+                .map { (filterType, userList) ->
+                    adapterViewModel.run {
+                        adapterRepository.clear()
+
+                        when (filterType) {
+                            FilterStatusViewModel.FilterType.FILTER_SORT_NAME -> {
+                                var prevStart = ""
+                                userList.forEach {
+                                    val nowStart: String = it.login.substring(0, 1)
+                                    if (prevStart != nowStart) {
+                                        adapterRepository.addItem(UserAdapterViewModel.VIEW_TYPE_SECTION, nowStart)
+                                    }
+                                    adapterRepository.addItem(UserAdapterViewModel.VIEW_TYPE_ITEM, it)
+                                    prevStart = nowStart
+                                }
+                            }
+                            else -> {
+                                adapterRepository.addItems(UserAdapterViewModel.VIEW_TYPE_ITEM, userList)
+                            }
+                        }
+                    }
+                }
                 .subscribe({
                     isLoading = false
 
                     adapterViewModel.run {
-                        adapterRepository.clear()
-                        adapterRepository.addItems(UserAdapterViewModel.VIEW_TYPE_ITEM, it)
                         notifyDataSetChanged()
                     }
                 }, {
@@ -135,13 +164,9 @@ class GithubUserFragmentViewModel(private val viewType: Int,
                 githubSearchRepository.likeUserInfo(item)
                 Unit
             }, {
-                Log.e("TEMP", "adapterPosition $adapterPosition")
                 when (viewType) {
                     GithubUserFragment.VIEW_TYPE_SEARCH -> {
                         notifyItemChanged(adapterPosition)
-                    }
-                    GithubUserFragment.VIEW_TYPE_LIKED -> {
-                        adapterRepository.addItem(UserAdapterViewModel.VIEW_TYPE_ITEM, item)
                     }
                 }
                 Unit
@@ -154,7 +179,6 @@ class GithubUserFragmentViewModel(private val viewType: Int,
                 githubSearchRepository.unlikeUserInfo(item)
                 Unit
             }, {
-                Log.e("TEMP", "adapterPosition $adapterPosition")
                 when (viewType) {
                     GithubUserFragment.VIEW_TYPE_SEARCH -> {
                         notifyItemChanged(adapterPosition)

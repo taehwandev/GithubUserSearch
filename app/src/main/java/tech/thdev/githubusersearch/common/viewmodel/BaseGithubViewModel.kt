@@ -18,7 +18,7 @@ abstract class BaseGithubViewModel : BaseLifecycleViewModel() {
 
     lateinit var onShowOtherError: (message: String?) -> Unit
 
-    private val uiThreadSubject = BehaviorSubject.create<() -> Unit>()
+    protected val uiThreadSubject = BehaviorSubject.create<() -> Unit>()
 
     /**
      * 로딩 상태 저장

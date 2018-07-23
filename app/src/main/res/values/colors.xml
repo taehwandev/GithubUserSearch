@@ -17,4 +17,5 @@
     <color name="colorFabLabelTextColor">#838383</color>
     <color name="colorFabRippleBackgroundColor">#66ffffff</color>
     <color name="colorFabBackgroundColor">#44000000</color>
+    <color name="colorErrorToastBackgroundColor">#dd000000</color>
 </resources>

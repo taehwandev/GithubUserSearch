@@ -6,12 +6,13 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.toast
 import kotlinx.android.synthetic.main.fragment_user_search.*
+import kotlinx.android.synthetic.main.include_toast_error.view.*
 import tech.thdev.githubusersearch.R
 import tech.thdev.githubusersearch.data.source.search.GithubSearchRepository
 import tech.thdev.githubusersearch.util.adapterScrollLinearLayoutManagerListener
 import tech.thdev.githubusersearch.util.autoRelease
+import tech.thdev.githubusersearch.util.createErrorToast
 import tech.thdev.githubusersearch.util.inject
 import tech.thdev.githubusersearch.view.common.adapter.UserRecyclerAdapter
 import tech.thdev.githubusersearch.view.common.viewmodel.FilterStatusViewModel
@@ -56,6 +57,15 @@ class GithubUserFragment : Fragment() {
     }
 
     private var githubUserFragmentViewModel: GithubUserFragmentViewModel by autoRelease()
+
+    private fun showErrorToast(message: String) {
+        requireContext().createErrorToast {
+            LayoutInflater.from(requireContext())
+                    .inflate(R.layout.include_toast_error, null).apply {
+                        this.tv_error_toast.text = message
+                    }
+        }.show()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
             inflater.inflate(R.layout.fragment_user_search, container, false)!!
@@ -109,6 +119,10 @@ class GithubUserFragment : Fragment() {
     }
 
     private fun GithubUserFragmentViewModel.viewInit() {
+        noSearchItem = {
+            showErrorToast(getString(R.string.message_no_result_user_name))
+        }
+
         onShowProgress = {
             group_loading.visibility = View.VISIBLE
         }
@@ -127,7 +141,7 @@ class GithubUserFragment : Fragment() {
     }
 
     private fun String.showErrorView() {
-        this@GithubUserFragment.context?.toast(this)
+        showErrorToast(this)
 
         if (userRecyclerAdapter.itemCount == 0) {
             recycler_view.visibility = View.GONE
