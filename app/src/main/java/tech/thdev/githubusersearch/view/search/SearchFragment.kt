@@ -13,6 +13,7 @@ import tech.thdev.githubusersearch.data.source.search.GithubSearchRepository
 import tech.thdev.githubusersearch.network.RetrofitFactory
 import tech.thdev.githubusersearch.util.inject
 import tech.thdev.githubusersearch.view.common.adapter.UserRecyclerAdapter
+import tech.thdev.githubusersearch.view.common.viewmodel.FilterStatusViewModel
 import tech.thdev.githubusersearch.view.common.viewmodel.SearchQueryViewModel
 import tech.thdev.githubusersearch.view.search.viewmodel.SearchFragmentViewModel
 
@@ -30,6 +31,12 @@ class SearchFragment : Fragment() {
     private val searchQueryViewModel: SearchQueryViewModel by lazy(LazyThreadSafetyMode.NONE) {
         SearchQueryViewModel::class.java.inject(requireActivity()) {
             SearchQueryViewModel()
+        }
+    }
+
+    private val filterStatusViewModel: FilterStatusViewModel by lazy(LazyThreadSafetyMode.NONE) {
+        FilterStatusViewModel::class.java.inject(requireActivity()) {
+            FilterStatusViewModel()
         }
     }
 
@@ -53,6 +60,7 @@ class SearchFragment : Fragment() {
         viewInit()
 
         searchQueryViewModel.init()
+        filterStatusViewModel.init()
         searchFragmentViewModel.init()
     }
 
@@ -61,6 +69,10 @@ class SearchFragment : Fragment() {
             layoutManager = LinearLayoutManager(this@SearchFragment.requireContext())
             adapter = userRecyclerAdapter
         }
+    }
+
+    private fun FilterStatusViewModel.init() {
+        updateFilterStatus = searchFragmentViewModel::changeFilter
     }
 
     private fun SearchQueryViewModel.init() {

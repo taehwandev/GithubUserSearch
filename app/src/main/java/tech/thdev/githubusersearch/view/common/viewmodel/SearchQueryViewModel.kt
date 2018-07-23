@@ -1,6 +1,5 @@
 package tech.thdev.githubusersearch.view.common.viewmodel
 
-import android.util.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
@@ -14,9 +13,9 @@ class SearchQueryViewModel : BaseLifecycleViewModel() {
     private val searchQuerySubject = BehaviorSubject.create<String>()
 
     init {
-        Log.d("TEMP", "create!!!!!!!!!")
         disposables += searchQuerySubject
                 .subscribeOn(Schedulers.io())
+                .distinctUntilChanged()
                 .filter {
                     ::updateSearchQuery.isInitialized
                 }

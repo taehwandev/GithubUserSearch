@@ -13,4 +13,6 @@ interface AdapterRepositoryInterface {
     fun addItem(viewType: Int, item: Any?)
 
     fun addItems(viewType: Int, item: List<Any?>?)
+
+    fun clear()
 }

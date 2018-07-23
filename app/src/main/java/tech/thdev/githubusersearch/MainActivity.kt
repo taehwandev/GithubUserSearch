@@ -10,6 +10,7 @@ import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
+import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.view.animation.Animation
@@ -19,7 +20,7 @@ import kotlinx.android.synthetic.main.include_fab_sort.*
 import tech.thdev.githubusersearch.util.animationStart
 import tech.thdev.githubusersearch.util.inject
 import tech.thdev.githubusersearch.util.loadFragment
-import tech.thdev.githubusersearch.util.rotationAnimationStart
+import tech.thdev.githubusersearch.view.common.viewmodel.FilterStatusViewModel
 import tech.thdev.githubusersearch.view.common.viewmodel.SearchQueryViewModel
 import tech.thdev.githubusersearch.view.search.SearchFragment
 
@@ -37,6 +38,12 @@ class MainActivity : AppCompatActivity() {
     private val searchQueryViewModel: SearchQueryViewModel by lazy(LazyThreadSafetyMode.NONE) {
         SearchQueryViewModel::class.java.inject(this) {
             SearchQueryViewModel()
+        }
+    }
+
+    private val filterStatusViewModel: FilterStatusViewModel by lazy(LazyThreadSafetyMode.NONE) {
+        FilterStatusViewModel::class.java.inject(this) {
+            FilterStatusViewModel()
         }
     }
 
@@ -72,10 +79,13 @@ class MainActivity : AppCompatActivity() {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         searchFragment.loadFragment()
+        filterStatusViewModel.onUpdateFilterIcon = ::hideFloatingSubMenu
         initView()
     }
 
     private fun initView() {
+        setSupportActionBar(toolbar)
+
         fab_sort.setOnClickListener {
             if (isShowFloatingMenu) {
                 hideFloatingSubMenu()
@@ -89,43 +99,41 @@ class MainActivity : AppCompatActivity() {
         }
 
         fab_sort_default.setOnClickListener {
-
+            filterStatusViewModel.selectFilter(FilterStatusViewModel.FilterType.FILTER_SORT_DEFAULT)
         }
         fab_sort_name.setOnClickListener {
-
+            filterStatusViewModel.selectFilter(FilterStatusViewModel.FilterType.FILTER_SORT_NAME)
         }
-        fab_sort_score.setOnClickListener {
-
+        fab_sort_date_of_registration.setOnClickListener {
+            filterStatusViewModel.selectFilter(FilterStatusViewModel.FilterType.FILTER_SORT_DATE_OF_REGISTRATION)
         }
     }
 
     private fun showFloatingSubMenu() {
         isShowFloatingMenu = true
-        fab_sort.startRotationAnimation(R.drawable.ic_close_white_24dp, 90.0F, true, R.color.colorFabBackgroundColor)
+        fab_sort.changeButton(R.drawable.ic_close_white_24dp, true, R.color.colorFabBackgroundColor)
         view_sort_default.startOpenAnimation()
         view_sort_name.startOpenAnimation()
-        view_sort_score.startOpenAnimation()
+        view_sort_date_of_registration.startOpenAnimation()
     }
 
-    private fun hideFloatingSubMenu() {
+    private fun hideFloatingSubMenu(filterIcon: Int = R.drawable.ic_sort_numbers) {
         isShowFloatingMenu = false
-        fab_sort.startRotationAnimation(R.drawable.ic_sort, 0F, false, R.color.colorTransparent)
+        Log.e("TEMP", "filterIcon $filterIcon")
+        fab_sort.changeButton(filterIcon, false, R.color.colorTransparent)
 
         view_sort_default.startCloseAnimation()
         view_sort_name.startCloseAnimation()
-        view_sort_score.startCloseAnimation()
+        view_sort_date_of_registration.startCloseAnimation()
     }
 
-    private fun FloatingActionButton.startRotationAnimation(
-            @DrawableRes drawableRes: Int, rotation: Float,
-            isClickable: Boolean, @ColorRes colorRes: Int) {
+    private fun FloatingActionButton.changeButton(
+            @DrawableRes drawableRes: Int, isClickable: Boolean, @ColorRes colorRes: Int) {
         this.setImageResource(drawableRes)
-        rotationAnimationStart(rotation, 300, 10.0F) {
-            view_fab_container.run {
-                this.isClickable = isClickable
-                this.isFocusable = isClickable
-                setBackgroundResource(colorRes)
-            }
+        view_fab_container.run {
+            this.isClickable = isClickable
+            this.isFocusable = isClickable
+            setBackgroundResource(colorRes)
         }
     }
 

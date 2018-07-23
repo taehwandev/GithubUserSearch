@@ -2,10 +2,8 @@
 
 package tech.thdev.githubusersearch.util
 
-import android.support.v4.view.ViewCompat
 import android.view.View
 import android.view.animation.Animation
-import android.view.animation.OvershootInterpolator
 
 inline fun View.animationStart(animation: Animation,
                                noinline onStart: (() -> Unit)? = null,
@@ -25,17 +23,4 @@ inline fun View.animationStart(animation: Animation,
             }
         })
     })
-}
-
-inline fun View.rotationAnimationStart(rotation: Float,
-                                       duration: Long,
-                                       overshootInterpolator: Float,
-                                       noinline endAction: (() -> Unit)? = null) {
-    ViewCompat.animate(this).rotation(rotation)
-            .withLayer()
-            .withEndAction {
-                endAction?.invoke()
-            }
-            .setDuration(duration)
-            .setInterpolator(OvershootInterpolator(overshootInterpolator)).start()
 }

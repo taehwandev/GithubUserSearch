@@ -12,5 +12,5 @@
 
     <string name="label_sort_default">Sort default</string>
     <string name="label_sort_name">Sort A-z</string>
-    <string name="label_sort_score">Sort score</string>
+    <string name="label_sort_date_of_registration">Sort Date</string>
 </resources>

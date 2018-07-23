@@ -18,4 +18,8 @@ abstract class BaseAdapterRepository<T : BaseAdapterItem> : AdapterRepositoryInt
     override fun removeAt(position: Int) {
         list.removeAt(position)
     }
+
+    override fun clear() {
+        list.clear()
+    }
 }
