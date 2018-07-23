@@ -3,6 +3,21 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="fab_mini_margin">10dp</dimen>
+    <dimen name="fab_interval_max_mini_margin">16dp</dimen>
+
+    <dimen name="fab_label_text_size">12sp</dimen>
+    <dimen name="fab_label_padding">8dp</dimen>
+    <dimen name="fab_label_end_margin">12dp</dimen>
+    <dimen name="fab_label_background_radius">6dp</dimen>
+    <dimen name="fab_mini_max_image_size">16dp</dimen>
+    <dimen name="fab_label_elevation">1dp</dimen>
+
+    <dimen name="standard_55">55dp</dimen>
+    <dimen name="standard_100">100dp</dimen>
+    <dimen name="standard_145">145dp</dimen>
+
     <dimen name="item_user_padding">10dp</dimen>
     <dimen name="item_user_picture_size">65dp</dimen>
     <dimen name="item_user_like_button">40dp</dimen>

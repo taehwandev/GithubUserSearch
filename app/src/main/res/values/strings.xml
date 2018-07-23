@@ -9,4 +9,8 @@
     <string name="message_unknown_error">There was a problem with unknown error.</string>
     <string name="label_retry">retry</string>
     <string name="message_user_score">User score %,.2f</string>
+
+    <string name="label_sort_default">Sort default</string>
+    <string name="label_sort_name">Sort A-z</string>
+    <string name="label_sort_score">Sort score</string>
 </resources>

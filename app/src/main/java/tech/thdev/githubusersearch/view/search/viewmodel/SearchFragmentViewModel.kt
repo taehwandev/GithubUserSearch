@@ -1,6 +1,5 @@
 package tech.thdev.githubusersearch.view.search.viewmodel
 
-import android.util.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
