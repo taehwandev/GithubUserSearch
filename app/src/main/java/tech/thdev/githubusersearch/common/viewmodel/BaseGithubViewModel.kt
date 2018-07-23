@@ -2,6 +2,7 @@ package tech.thdev.githubusersearch.common.viewmodel
 
 import io.reactivex.SingleTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import tech.thdev.githubusersearch.base.viewmodel.BaseLifecycleViewModel
 import tech.thdev.githubusersearch.util.NoNetworkException
@@ -17,18 +18,45 @@ abstract class BaseGithubViewModel : BaseLifecycleViewModel() {
 
     lateinit var onShowOtherError: (message: String?) -> Unit
 
-    protected val uiThreadSubject = BehaviorSubject.create<() -> Unit>()
+    private val uiThreadSubject = BehaviorSubject.create<() -> Unit>()
+
+    /**
+     * 로딩 상태 저장
+     */
+    protected var isLoading = false
+
+    /**
+     * Pair<first, seconds>
+     * first : background thread
+     * seconds : ui thread
+     */
+    protected val databaseHelperSubject = BehaviorSubject.create<Pair<() -> Unit, () -> Unit>>()
 
     init {
         disposables += uiThreadSubject
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ it() }, {})
+
+        disposables += databaseHelperSubject
+                .observeOn(Schedulers.io())
+                .map { (first, seconds) ->
+                    first()
+                    seconds
+                }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    it()
+                }, {
+                    it.printStackTrace()
+                })
     }
 
     protected fun <T> progressCompose() =
             SingleTransformer<T, T> {
                 it
                         .doOnSubscribe {
+                            isLoading = true
+
                             uiThreadSubject.onNext {
                                 if (::onShowProgress.isInitialized) {
                                     onShowProgress()
@@ -44,6 +72,8 @@ abstract class BaseGithubViewModel : BaseLifecycleViewModel() {
             }
 
     protected fun onErrorThrowable(error: Throwable) {
+        isLoading = false
+
         when (error) {
             is NoNetworkException -> {
                 uiThreadSubject.onNext {
@@ -64,6 +94,8 @@ abstract class BaseGithubViewModel : BaseLifecycleViewModel() {
                 }
             }
         }
+
+        error.printStackTrace()
     }
 
     private fun hideProgress() {

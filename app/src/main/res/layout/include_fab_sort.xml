@@ -5,6 +5,8 @@
     android:id="@+id/view_fab_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="false"
+    android:focusable="false"
     tools:background="@color/colorFabBackgroundColor">
 
     <android.support.constraint.ConstraintLayout

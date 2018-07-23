@@ -1,4 +1,4 @@
-package tech.thdev.githubusersearch
+package tech.thdev.githubusersearch.view.github
 
 import android.app.SearchManager
 import android.content.Context
@@ -10,29 +10,36 @@ import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
-import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_fab_sort.*
+import tech.thdev.githubusersearch.R
+import tech.thdev.githubusersearch.data.source.search.GithubSearchRepository
+import tech.thdev.githubusersearch.db.GithubRoomDatabase
+import tech.thdev.githubusersearch.network.RetrofitFactory
 import tech.thdev.githubusersearch.util.animationStart
 import tech.thdev.githubusersearch.util.inject
 import tech.thdev.githubusersearch.util.loadFragment
 import tech.thdev.githubusersearch.view.common.viewmodel.FilterStatusViewModel
 import tech.thdev.githubusersearch.view.common.viewmodel.SearchQueryViewModel
-import tech.thdev.githubusersearch.view.search.SearchFragment
 
 
-class MainActivity : AppCompatActivity() {
+class GithubUserActivity : AppCompatActivity() {
+
+    private val githubSearchRepository: GithubSearchRepository
+        get() = GithubSearchRepository.getInstance(
+                githubApi = RetrofitFactory.githubApi,
+                githubRoomDatabase = GithubRoomDatabase.getInstance(application))
 
     private val searchFragment: Fragment by lazy {
-        SearchFragment.getInstance("Search!!!!!")
+        GithubUserFragment.getInstance(GithubUserFragment.VIEW_TYPE_SEARCH, githubSearchRepository)
     }
 
     private val likeFragment: Fragment by lazy {
-        SearchFragment.getInstance("Like!!!!!!!!")
+        GithubUserFragment.getInstance(GithubUserFragment.VIEW_TYPE_LIKED, githubSearchRepository)
     }
 
     private val searchQueryViewModel: SearchQueryViewModel by lazy(LazyThreadSafetyMode.NONE) {
@@ -47,13 +54,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val fabOpenAnimation: Animation by lazy(LazyThreadSafetyMode.NONE) {
-        AnimationUtils.loadAnimation(this, R.anim.fab_open)
-    }
-
-    private val fabCloseAnimation: Animation by lazy(LazyThreadSafetyMode.NONE) {
-        AnimationUtils.loadAnimation(this, R.anim.fab_close)
-    }
+    private lateinit var fabOpenAnimation: Animation
+    private lateinit var fabCloseAnimation: Animation
 
     private var isShowFloatingMenu: Boolean = false
 
@@ -76,6 +78,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        fabOpenAnimation = AnimationUtils.loadAnimation(this, R.anim.fab_open)
+        fabCloseAnimation = AnimationUtils.loadAnimation(this, R.anim.fab_close)
+
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         searchFragment.loadFragment()
@@ -94,6 +99,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        hideFloatingSubMenu()
         view_fab_container.setOnClickListener {
             hideFloatingSubMenu()
         }
@@ -119,7 +125,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun hideFloatingSubMenu(filterIcon: Int = R.drawable.ic_sort_numbers) {
         isShowFloatingMenu = false
-        Log.e("TEMP", "filterIcon $filterIcon")
         fab_sort.changeButton(filterIcon, false, R.color.colorTransparent)
 
         view_sort_default.startCloseAnimation()
@@ -172,6 +177,7 @@ class MainActivity : AppCompatActivity() {
                 queryHint = getString(R.string.search_hint)
                 setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String?): Boolean {
+                        searchQueryViewModel.setSearchQuery(query, true)
                         return false
                     }
 
@@ -180,8 +186,18 @@ class MainActivity : AppCompatActivity() {
                         return false
                     }
                 })
+                setOnCloseListener {
+                    searchQueryViewModel.setSearchQuery("")
+                    false
+                }
             }
         }
         return true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        githubSearchRepository.clear()
     }
 }

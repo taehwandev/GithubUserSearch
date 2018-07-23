@@ -20,7 +20,8 @@ class FilterStatusViewModel : BaseLifecycleViewModel() {
 
     private val filterStatusChangeSubject = BehaviorSubject.create<FilterType>()
 
-    private var prevFilterType: FilterType = FilterType.FILTER_SORT_DEFAULT
+    var prevFilterType: FilterType = FilterType.FILTER_SORT_DEFAULT
+        private set
 
     init {
         disposables += filterStatusChangeSubject

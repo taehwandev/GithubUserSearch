@@ -12,16 +12,16 @@ class UserAdapterViewModel(adapterRepository: AdapterRepositoryInterface) : Base
         const val VIEW_TYPE_ITEM = 2000
     }
 
-    lateinit var onLikeUserInfo: (item: GithubUser) -> Unit
+    lateinit var onLikeUserInfo: (adapterPosition: Int, item: GithubUser) -> Unit
 
-    lateinit var onUnlikeUserInfo: (item: GithubUser) -> Unit
+    lateinit var onUnlikeUserInfo: (adapterPosition: Int, item: GithubUser) -> Unit
 
     fun onClickUserItem(adapterPosition: Int) {
         adapterRepository.getItem(adapterPosition).cast<GithubUser>()?.let {
             if (it.isLike) {
-                onUnlikeUserInfo(it)
+                onUnlikeUserInfo(adapterPosition, it)
             } else {
-                onLikeUserInfo(it)
+                onLikeUserInfo(adapterPosition, it)
             }
         }
     }

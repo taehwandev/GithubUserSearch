@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".view.github.GithubUserActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
@@ -23,13 +23,14 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/activity_bottom_navigation_height"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <include
         layout="@layout/include_fab_sort"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="52dp"
+        android:layout_marginBottom="@dimen/activity_bottom_navigation_height"
         app:layout_anchor="@+id/navigation"
         app:layout_anchorGravity="end|bottom" />
 

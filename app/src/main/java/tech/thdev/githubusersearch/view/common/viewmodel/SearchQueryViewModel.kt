@@ -9,13 +9,19 @@ import tech.thdev.githubusersearch.util.plusAssign
 class SearchQueryViewModel : BaseLifecycleViewModel() {
 
     lateinit var updateSearchQuery: (String) -> Unit
+    lateinit var updateSearchQueryCommit: (String) -> Unit
 
     private val searchQuerySubject = BehaviorSubject.create<String>()
+
+    var prevSearchQuery: String = ""
+        private set
 
     init {
         disposables += searchQuerySubject
                 .subscribeOn(Schedulers.io())
-                .distinctUntilChanged()
+                .map {
+                    it.also { prevSearchQuery = it }
+                }
                 .filter {
                     ::updateSearchQuery.isInitialized
                 }
@@ -25,7 +31,10 @@ class SearchQueryViewModel : BaseLifecycleViewModel() {
                 }, {})
     }
 
-    fun setSearchQuery(query: String?) {
+    fun setSearchQuery(query: String?, summit: Boolean = false) {
         searchQuerySubject.onNext(query ?: "")
+        if (summit && ::updateSearchQueryCommit.isInitialized) {
+            updateSearchQueryCommit(query ?: "")
+        }
     }
 }

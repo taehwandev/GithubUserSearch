@@ -3,16 +3,16 @@ package tech.thdev.githubusersearch.util
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.OnLifecycleEvent
-import android.support.v7.app.AppCompatActivity
+import android.support.v4.app.Fragment
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-open class AutoReleaseActivity<T : Any>(activity: AppCompatActivity) : ReadWriteProperty<AppCompatActivity, T> {
+open class AutoReleaseLifecycle<T : Any>(fragment: Fragment) : ReadWriteProperty<Fragment, T> {
 
     protected var _value: T? = null
 
     init {
-        activity.lifecycle.addObserver(object : LifecycleObserver {
+        fragment.lifecycle.addObserver(object : LifecycleObserver {
 
             @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
             fun onDestroy() {
@@ -21,18 +21,18 @@ open class AutoReleaseActivity<T : Any>(activity: AppCompatActivity) : ReadWrite
         })
     }
 
-    override fun getValue(thisRef: AppCompatActivity, property: KProperty<*>): T {
+    override fun getValue(thisRef: Fragment, property: KProperty<*>): T {
         return _value ?: throw IllegalStateException(
                 "should never call auto-cleared-value get when it might not be available"
         )
     }
 
-    override fun setValue(thisRef: AppCompatActivity, property: KProperty<*>, value: T) {
+    override fun setValue(thisRef: Fragment, property: KProperty<*>, value: T) {
         _value = value
     }
 }
 
 /**
- * Creates an [AutoReleaseActivity] associated with this activity.
+ * Creates an [AutoReleaseLifecycle] associated with this fragment.
  */
-fun <T : Any> AppCompatActivity.autoRelase() = AutoReleaseActivity<T>(this)
+fun <T : Any> Fragment.autoRelease() = AutoReleaseLifecycle<T>(this)
