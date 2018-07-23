@@ -4,11 +4,11 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion rootProject.compileSdkVersion
     defaultConfig {
         applicationId "tech.thdev.githubusersearch"
-        minSdkVersion 15
-        targetSdkVersion 28
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -25,22 +25,34 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    androidExtensions {
+        experimental = true
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
     implementation "com.android.support:design:$rootProject.supportLibraryVersion"
-    implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintVersion"
+    implementation "com.android.support.constraint:constraint-layout:$rootProject.constraintVersion"
     implementation "android.arch.lifecycle:extensions:$rootProject.lifecycleVersion"
     implementation "androidx.core:core-ktx:$rootProject.ktxVersion"
+
+    implementation "android.arch.persistence.room:runtime:$roomVersion"
+    kapt "android.arch.persistence.room:compiler:$roomVersion"
+    // optional - RxJava support for Room
+    implementation "android.arch.persistence.room:rxjava2:$roomVersion"
 
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
-
     implementation "com.squareup.okhttp3:okhttp:$rootProject.okhttpVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpVersion"
 
@@ -59,6 +71,8 @@ dependencies {
 
     // Optional -- Mockito framework
     testImplementation "org.mockito:mockito-core:$rootProject.mockito"
+    testImplementation "org.mockito:mockito-inline:$rootProject.mockito"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$rootProject.mockitoKotlin"
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$rootProject.kotlin_version"
+    implementation project(':baseadapter')
 }
