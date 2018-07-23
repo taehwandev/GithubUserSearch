@@ -3,4 +3,15 @@
 
     <string name="title_search">Search</string>
     <string name="title_liked">Liked</string>
+    <string name="search_hint">Search github user name</string>
+
+    <string name="message_network_error">There was a problem with the network connection.</string>
+    <string name="message_unknown_error">There was a problem with unknown error.</string>
+    <string name="label_retry">retry</string>
+    <string name="message_user_score">User score %,.2f</string>
+
+    <string name="label_sort_default">Sort default</string>
+    <string name="label_sort_name">Sort A-z</string>
+    <string name="label_sort_date_of_registration">Sort Date</string>
+    <string name="message_no_result_user_name">No result github user name.</string>
 </resources>

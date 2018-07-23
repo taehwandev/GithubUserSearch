@@ -4,8 +4,8 @@ import io.reactivex.Single
 import tech.thdev.githubusersearch.data.GithubResponse
 import tech.thdev.githubusersearch.network.GithubInterface
 
-class GithubSearchRemoteDataSource(private val githubApi: GithubInterface) : GithubSearchDataSource {
+class GithubSearchRemoteDataSource(private val githubApi: GithubInterface) {
 
-    override fun searchUser(name: String, page: Int, perPage: Int): Single<GithubResponse> =
+    fun searchUser(name: String, page: Int, perPage: Int): Single<GithubResponse> =
             githubApi.searchUser(name, page, perPage)
 }
