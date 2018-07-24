@@ -106,6 +106,9 @@ class GithubUserActivity : AppCompatActivity() {
         view_fab_container.run {
             this.isClickable = false
             this.isFocusable = false
+            setOnTouchListener { _, _ ->
+                false
+            }
         }
 
         fab_sort_default.setOnClickListener {
@@ -143,9 +146,14 @@ class GithubUserActivity : AppCompatActivity() {
             this.isClickable = isClickable
             this.isFocusable = isClickable
             setBackgroundResource(colorRes)
-            setOnClickListener {
-                hideFloatingSubMenu()
-            }
+                setOnTouchListener { _, _ ->
+                    if (isClickable) {
+                        hideFloatingSubMenu()
+                        true
+                    } else {
+                        false
+                    }
+                }
         }
     }
 
