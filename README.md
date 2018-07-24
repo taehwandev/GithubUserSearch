@@ -7,11 +7,9 @@ Using the Android AAC-ViewModel and my own [SimpleAdapter](https://github.com/ta
 
 # Sample Page
 
-| --------- | -------- |
 | User search | User like and sort button. |
-| --------- | -------- |
+|:----------: | :----------: |
 | ![main](images/search_page.png)  | ![detail](images/like_page.png) |
-| --------- | -------- |
 
 # Use Android API
 
