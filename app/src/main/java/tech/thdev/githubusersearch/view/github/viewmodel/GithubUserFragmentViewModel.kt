@@ -39,6 +39,8 @@ class GithubUserFragmentViewModel(private val viewType: Int,
     private var prevSearchQuery: String = ""
 
     lateinit var noSearchItem: () -> Unit
+    lateinit var showEmptyView: () -> Unit
+    lateinit var hideEmptyView: () -> Unit
 
     private val TAG = this.javaClass.simpleName
     private val perPage = 50
@@ -58,15 +60,24 @@ class GithubUserFragmentViewModel(private val viewType: Int,
                     }
                 }
                 .filter {
-                    if (it.third.size == 0 && it.first.isNotEmpty()) {
-                        uiThreadSubject.onNext {
+                    uiThreadSubject.onNext {
+                        if (it.third.size == 0) {
                             adapterViewModel.run {
                                 adapterRepository.clear()
                                 notifyDataSetChanged()
                             }
-
-                            if (::noSearchItem.isInitialized) {
-                                noSearchItem()
+                            if (it.first.isNotEmpty()) {
+                                if (::noSearchItem.isInitialized) {
+                                    noSearchItem()
+                                }
+                            } else {
+                                if (::noSearchItem.isInitialized) {
+                                    showEmptyView()
+                                }
+                            }
+                        } else {
+                            if (::hideEmptyView.isInitialized) {
+                                hideEmptyView()
                             }
                         }
                     }

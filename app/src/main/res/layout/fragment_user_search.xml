@@ -49,27 +49,24 @@
         android:padding="@dimen/item_user_padding"
         android:textSize="@dimen/error_message_text_size"
         android:textStyle="bold"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/btn_user_behavior"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:text="No result" />
+        tools:text="No result"
+        tools:visibility="visible" />
 
     <Button
         android:id="@+id/btn_user_behavior"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/label_retry"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_user_message" />
-
-    <android.support.constraint.Group
-        android:id="@+id/group_user_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="tv_user_message, btn_user_behavior" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_user_message"
+        tools:visibility="visible" />
 </android.support.constraint.ConstraintLayout>

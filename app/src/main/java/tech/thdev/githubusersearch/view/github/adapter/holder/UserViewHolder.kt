@@ -11,14 +11,10 @@ import tech.thdev.simple.adapter.holder.BaseViewHolder
 class UserViewHolder(parent: ViewGroup) :
         BaseViewHolder<GithubUser, UserAdapterViewModel>(R.layout.item_user, parent) {
 
-    init {
-        containerView.setOnClickListener {
-            viewModel.onClickUserItem(adapterPosition)
-        }
-    }
-
     override fun UserAdapterViewModel.onInitViewModel() {
-
+        containerView.setOnClickListener {
+            this.onClickUserItem(adapterPosition)
+        }
     }
 
     override fun onBindViewHolder(item: GithubUser?) {

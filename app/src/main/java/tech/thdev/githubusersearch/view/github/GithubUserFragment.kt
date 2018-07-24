@@ -121,6 +121,14 @@ class GithubUserFragment : Fragment() {
     }
 
     private fun GithubUserFragmentViewModel.viewInit() {
+        showEmptyView = {
+            showDefaultView()
+        }
+
+        hideEmptyView = {
+            tv_user_message.visibility = View.GONE
+        }
+
         noSearchItem = {
             showErrorToast(getString(R.string.message_no_result_user_name))
             showDefaultView()
@@ -157,12 +165,16 @@ class GithubUserFragment : Fragment() {
 
         if (userRecyclerAdapter.itemCount == 0) {
             recycler_view.visibility = View.GONE
-            group_user_message.visibility = View.VISIBLE
-            tv_user_message.text = this
+            tv_user_message.run {
+                visibility = View.VISIBLE
+                text = this@showErrorView
+            }
+            btn_user_behavior.visibility = View.VISIBLE
 
             btn_user_behavior.setOnClickListener {
                 recycler_view.visibility = View.VISIBLE
-                group_user_message.visibility = View.GONE
+                tv_user_message.visibility = View.GONE
+                btn_user_behavior.visibility = View.GONE
                 githubUserFragmentViewModel.run {
                     initSearchQuerySubject()
                     search(searchQueryViewModel.prevSearchQuery)

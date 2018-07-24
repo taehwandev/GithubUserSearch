@@ -1,17 +1,14 @@
 package tech.thdev.githubusersearch.data.source.search
 
-import io.reactivex.Single
-import io.reactivex.functions.BiConsumer
+import com.nhaarman.mockitokotlin2.mock
 import io.reactivex.subscribers.TestSubscriber
 import org.junit.Before
 import org.junit.Test
-import tech.thdev.githubusersearch.data.GithubResponse
+import tech.thdev.githubusersearch.db.GithubRoomDatabase
 import tech.thdev.githubusersearch.network.GithubInterface
 import tech.thdev.githubusersearch.network.RetrofitFactory
 import tech.thdev.githubusersearch.util.NoNetworkException
 import tech.thdev.githubusersearch.util.createRetrofit
-import java.util.concurrent.TimeoutException
-
 
 class GithubSearchRepositoryTest {
 
@@ -20,25 +17,27 @@ class GithubSearchRepositoryTest {
 
     private var isAvailableNetwork = true
 
+    private val database: GithubRoomDatabase = mock()
+
     @Before
     fun setUp() {
         api = createRetrofit(GithubInterface::class.java, RetrofitFactory.baseUrl) {
             isAvailableNetwork
         }
-        githubSearchRepository = GithubSearchRepository.getInstance(api)
+        githubSearchRepository = GithubSearchRepository.getInstance(api, database)
     }
 
     @Test
     fun githubSearchTest() {
         val testSubscriber = TestSubscriber<Boolean>()
-        githubSearchRepository.searchUser("taehwan", 0, 10)
+        githubSearchRepository.searchUser("taehwan", 1)
                 .subscribe { t1, t2 ->
                     when (t2) {
                         is NoNetworkException -> {
 
                         }
                         else -> {
-                            testSubscriber.onNext(t1.totalCount == 1)
+                            testSubscriber.onNext(t1.size == 1)
                         }
                     }
                 }
@@ -52,8 +51,8 @@ class GithubSearchRepositoryTest {
 
         val testSubscriber = TestSubscriber<Boolean>()
 
-        githubSearchRepository.searchUser("taehwandev", 0, 10)
-                .subscribe { t1, t2 ->
+        githubSearchRepository.searchUser("taehwandev", 1)
+                .subscribe { _, t2 ->
                     when (t2) {
                         is NoNetworkException -> {
                             testSubscriber.onNext(true)
@@ -65,20 +64,5 @@ class GithubSearchRepositoryTest {
                 }
 
         testSubscriber.assertValue(true)
-    }
-
-    class GithubBiConsumer<T>(private val onSuccess: (item: T) -> Unit,
-                                          private val onError: (throwable: Throwable) -> Unit) : BiConsumer<T, Throwable> {
-
-        override fun accept(item: T, throwable: Throwable) {
-            when (throwable) {
-                is NoNetworkException, is TimeoutException -> {
-                    onError(throwable)
-                }
-                else -> {
-                    onSuccess(item)
-                }
-            }
-        }
     }
 }
