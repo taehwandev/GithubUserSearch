@@ -2,10 +2,12 @@ package tech.thdev.simple.adapter.data.source
 
 import tech.thdev.simple.adapter.data.BaseAdapterItem
 
-class AdapterRepository : BaseAdapterRepository<BaseAdapterItem.DefaultAdapterItem>() {
+class AdapterRepository : AbstractAdapterRepository<BaseAdapterItem.DefaultAdapterItem>() {
 
     override fun getItemViewType(position: Int): Int =
-            list[position].viewType
+            position.getIndexOfBounds()?.let {
+                list[it].viewType
+            } ?: -1
 
     override fun addItems(viewType: Int, item: List<Any?>?) {
         item?.forEach {
@@ -14,10 +16,14 @@ class AdapterRepository : BaseAdapterRepository<BaseAdapterItem.DefaultAdapterIt
     }
 
     override fun getItem(position: Int): Any? =
-            list[position].item
+            position.getIndexOfBounds()?.let {
+                list[it].item
+            }
 
     override fun removeAt(position: Int) {
-        list.removeAt(position)
+        position.getIndexOfBounds()?.let {
+            list.removeAt(it)
+        }
     }
 
     override fun addItem(viewType: Int, item: Any?) {

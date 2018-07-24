@@ -2,7 +2,10 @@ package tech.thdev.simple.adapter.data.source
 
 import tech.thdev.simple.adapter.data.BaseAdapterItem
 
-abstract class BaseAdapterRepository<T : BaseAdapterItem> : AdapterRepositoryInterface {
+abstract class AbstractAdapterRepository<T : BaseAdapterItem> : AdapterRepositoryInterface {
+
+    protected fun Int.getIndexOfBounds() =
+            this.takeIf { this in 0..itemCount }
 
     protected val list = mutableListOf<T>()
 
@@ -16,7 +19,9 @@ abstract class BaseAdapterRepository<T : BaseAdapterItem> : AdapterRepositoryInt
     }
 
     override fun removeAt(position: Int) {
-        list.removeAt(position)
+        position.getIndexOfBounds()?.let {
+            list.removeAt(it)
+        }
     }
 
     override fun clear() {

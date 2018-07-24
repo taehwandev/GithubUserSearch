@@ -14,6 +14,7 @@ import android.view.Menu
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import com.google.android.gms.security.ProviderInstaller
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_fab_sort.*
 import tech.thdev.githubusersearch.R
@@ -23,8 +24,8 @@ import tech.thdev.githubusersearch.network.RetrofitFactory
 import tech.thdev.githubusersearch.util.animationStart
 import tech.thdev.githubusersearch.util.inject
 import tech.thdev.githubusersearch.util.loadFragment
-import tech.thdev.githubusersearch.view.common.viewmodel.FilterStatusViewModel
-import tech.thdev.githubusersearch.view.common.viewmodel.SearchQueryViewModel
+import tech.thdev.githubusersearch.view.github.viewmodel.FilterStatusViewModel
+import tech.thdev.githubusersearch.view.github.viewmodel.SearchQueryViewModel
 
 
 class GithubUserActivity : AppCompatActivity() {
@@ -78,6 +79,9 @@ class GithubUserActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Android 4.x Hand shake exception...
+        ProviderInstaller.installIfNeeded(applicationContext)
+
         fabOpenAnimation = AnimationUtils.loadAnimation(this, R.anim.fab_open)
         fabCloseAnimation = AnimationUtils.loadAnimation(this, R.anim.fab_close)
 
@@ -99,9 +103,9 @@ class GithubUserActivity : AppCompatActivity() {
             }
         }
 
-        hideFloatingSubMenu()
-        view_fab_container.setOnClickListener {
-            hideFloatingSubMenu()
+        view_fab_container.run {
+            this.isClickable = false
+            this.isFocusable = false
         }
 
         fab_sort_default.setOnClickListener {
@@ -139,6 +143,9 @@ class GithubUserActivity : AppCompatActivity() {
             this.isClickable = isClickable
             this.isFocusable = isClickable
             setBackgroundResource(colorRes)
+            setOnClickListener {
+                hideFloatingSubMenu()
+            }
         }
     }
 

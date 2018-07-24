@@ -10,9 +10,8 @@ import tech.thdev.githubusersearch.common.viewmodel.BaseGithubViewModel
 import tech.thdev.githubusersearch.data.GithubUser
 import tech.thdev.githubusersearch.data.source.search.GithubSearchRepository
 import tech.thdev.githubusersearch.util.plusAssign
-import tech.thdev.githubusersearch.view.common.adapter.viewmodel.UserAdapterViewModel
-import tech.thdev.githubusersearch.view.common.viewmodel.FilterStatusViewModel
 import tech.thdev.githubusersearch.view.github.GithubUserFragment
+import tech.thdev.githubusersearch.view.github.adapter.viewmodel.UserAdapterViewModel
 import java.util.concurrent.TimeUnit
 
 class GithubUserFragmentViewModel(private val viewType: Int,
@@ -61,6 +60,11 @@ class GithubUserFragmentViewModel(private val viewType: Int,
                 .filter {
                     if (it.third.size == 0 && it.first.isNotEmpty()) {
                         uiThreadSubject.onNext {
+                            adapterViewModel.run {
+                                adapterRepository.clear()
+                                notifyDataSetChanged()
+                            }
+
                             if (::noSearchItem.isInitialized) {
                                 noSearchItem()
                             }
@@ -75,6 +79,9 @@ class GithubUserFragmentViewModel(private val viewType: Int,
                         }
                         FilterStatusViewModel.FilterType.FILTER_SORT_DATE_OF_REGISTRATION -> {
                             userList.sortBy { it.id }
+                        }
+                        else -> {
+                            // Do nothing.
                         }
                     }
                     Pair(filterType, userList)
@@ -105,9 +112,7 @@ class GithubUserFragmentViewModel(private val viewType: Int,
                 .subscribe({
                     isLoading = false
 
-                    adapterViewModel.run {
-                        notifyDataSetChanged()
-                    }
+                    adapterViewModel.notifyDataSetChanged()
                 }, {
                     it.printStackTrace()
                 })

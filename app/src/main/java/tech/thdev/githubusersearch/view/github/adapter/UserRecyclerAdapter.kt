@@ -1,12 +1,12 @@
-package tech.thdev.githubusersearch.view.common.adapter
+package tech.thdev.githubusersearch.view.github.adapter
 
 import android.content.res.Resources
 import android.view.ViewGroup
-import tech.thdev.githubusersearch.view.common.adapter.holder.UserSectionViewHolder
-import tech.thdev.githubusersearch.view.common.adapter.holder.UserViewHolder
-import tech.thdev.githubusersearch.view.common.adapter.viewmodel.UserAdapterViewModel
-import tech.thdev.githubusersearch.view.common.adapter.viewmodel.UserAdapterViewModel.Companion.VIEW_TYPE_ITEM
-import tech.thdev.githubusersearch.view.common.adapter.viewmodel.UserAdapterViewModel.Companion.VIEW_TYPE_SECTION
+import tech.thdev.githubusersearch.view.github.adapter.holder.UserSectionViewHolder
+import tech.thdev.githubusersearch.view.github.adapter.holder.UserViewHolder
+import tech.thdev.githubusersearch.view.github.adapter.viewmodel.UserAdapterViewModel
+import tech.thdev.githubusersearch.view.github.adapter.viewmodel.UserAdapterViewModel.Companion.VIEW_TYPE_ITEM
+import tech.thdev.githubusersearch.view.github.adapter.viewmodel.UserAdapterViewModel.Companion.VIEW_TYPE_SECTION
 import tech.thdev.simple.adapter.BaseRecyclerViewAdapter
 import tech.thdev.simple.adapter.holder.BaseViewHolder
 

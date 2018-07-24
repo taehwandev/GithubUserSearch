@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import tech.thdev.githubusersearch.BuildConfig
 import java.util.concurrent.TimeUnit
 
-const val REQUEST_TIME_OUT = 60L
+private const val REQUEST_TIME_OUT = 60L
 
 inline fun <T> createRetrofit(cls: Class<T>, baseUrl: String, noinline isInternetAvailable: () -> Boolean): T =
         Retrofit.Builder()

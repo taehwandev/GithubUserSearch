@@ -42,14 +42,14 @@
         app:constraint_referenced_ids="view_loading_background, progress_bar" />
 
     <TextView
-        android:id="@+id/tv_error_message"
+        android:id="@+id/tv_user_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="@dimen/item_user_padding"
         android:textSize="@dimen/error_message_text_size"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/btn_error"
+        app:layout_constraintBottom_toTopOf="@+id/btn_user_behavior"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -57,19 +57,19 @@
         tools:text="No result" />
 
     <Button
-        android:id="@+id/btn_error"
+        android:id="@+id/btn_user_behavior"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/label_retry"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_error_message" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_user_message" />
 
     <android.support.constraint.Group
-        android:id="@+id/group_error"
+        android:id="@+id/group_user_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="tv_error_message, btn_error" />
+        app:constraint_referenced_ids="tv_user_message, btn_user_behavior" />
 </android.support.constraint.ConstraintLayout>

@@ -14,10 +14,10 @@ import tech.thdev.githubusersearch.util.adapterScrollLinearLayoutManagerListener
 import tech.thdev.githubusersearch.util.autoRelease
 import tech.thdev.githubusersearch.util.createErrorToast
 import tech.thdev.githubusersearch.util.inject
-import tech.thdev.githubusersearch.view.common.adapter.UserRecyclerAdapter
-import tech.thdev.githubusersearch.view.common.viewmodel.FilterStatusViewModel
-import tech.thdev.githubusersearch.view.common.viewmodel.SearchQueryViewModel
+import tech.thdev.githubusersearch.view.github.adapter.UserRecyclerAdapter
+import tech.thdev.githubusersearch.view.github.viewmodel.FilterStatusViewModel
 import tech.thdev.githubusersearch.view.github.viewmodel.GithubUserFragmentViewModel
+import tech.thdev.githubusersearch.view.github.viewmodel.SearchQueryViewModel
 
 class GithubUserFragment : Fragment() {
 
@@ -73,6 +73,8 @@ class GithubUserFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        showDefaultView()
+
         githubUserFragmentViewModel = GithubUserFragmentViewModel::class.java.inject(this) {
             GithubUserFragmentViewModel(
                     viewType = viewType,
@@ -121,6 +123,7 @@ class GithubUserFragment : Fragment() {
     private fun GithubUserFragmentViewModel.viewInit() {
         noSearchItem = {
             showErrorToast(getString(R.string.message_no_result_user_name))
+            showDefaultView()
         }
 
         onShowProgress = {
@@ -140,17 +143,26 @@ class GithubUserFragment : Fragment() {
         }
     }
 
+    private fun showDefaultView() {
+        if (userRecyclerAdapter.itemCount == 0) {
+            tv_user_message.run {
+                visibility = View.VISIBLE
+                setText(R.string.search_hint)
+            }
+        }
+    }
+
     private fun String.showErrorView() {
         showErrorToast(this)
 
         if (userRecyclerAdapter.itemCount == 0) {
             recycler_view.visibility = View.GONE
-            group_error.visibility = View.VISIBLE
-            tv_error_message.text = this
+            group_user_message.visibility = View.VISIBLE
+            tv_user_message.text = this
 
-            btn_error.setOnClickListener {
+            btn_user_behavior.setOnClickListener {
                 recycler_view.visibility = View.VISIBLE
-                group_error.visibility = View.GONE
+                group_user_message.visibility = View.GONE
                 githubUserFragmentViewModel.run {
                     initSearchQuerySubject()
                     search(searchQueryViewModel.prevSearchQuery)

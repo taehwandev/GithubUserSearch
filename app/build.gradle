@@ -12,7 +12,6 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -49,6 +48,8 @@ dependencies {
     kapt "android.arch.persistence.room:compiler:$roomVersion"
     // optional - RxJava support for Room
     implementation "android.arch.persistence.room:rxjava2:$roomVersion"
+
+    implementation "com.google.android.gms:play-services-base:$googleServiceVersion"
 
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofitVersion"

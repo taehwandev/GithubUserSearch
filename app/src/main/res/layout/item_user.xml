@@ -9,15 +9,15 @@
     android:paddingTop="@dimen/item_user_padding"
     android:paddingEnd="@dimen/item_user_padding">
 
-    <ImageView
+    <android.support.v7.widget.AppCompatImageView
         android:id="@+id/img_user_picture"
         android:layout_width="@dimen/item_user_picture_size"
         android:layout_height="@dimen/item_user_picture_size"
         android:scaleType="centerCrop"
+        android:src="@drawable/ic_launcher_foreground"
         app:layout_constraintBottom_toTopOf="@+id/view_divider"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_user_name"
@@ -49,14 +49,14 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_user_name"
         tools:text="User score : 96.88" />
 
-    <ImageView
+    <android.support.v7.widget.AppCompatImageView
         android:id="@+id/img_user_like"
         android:layout_width="@dimen/item_user_like_button"
         android:layout_height="@dimen/item_user_like_button"
+        android:src="@drawable/select_favorite_icon"
         app:layout_constraintBottom_toTopOf="@+id/view_divider"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/select_favorite_icon" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/view_divider"

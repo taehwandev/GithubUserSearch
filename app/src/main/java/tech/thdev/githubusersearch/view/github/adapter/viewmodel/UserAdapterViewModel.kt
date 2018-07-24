@@ -1,4 +1,4 @@
-package tech.thdev.githubusersearch.view.common.adapter.viewmodel
+package tech.thdev.githubusersearch.view.github.adapter.viewmodel
 
 import tech.thdev.githubusersearch.data.GithubUser
 import tech.thdev.simple.adapter.data.source.AdapterRepositoryInterface
@@ -19,9 +19,13 @@ class UserAdapterViewModel(adapterRepository: AdapterRepositoryInterface) : Base
     fun onClickUserItem(adapterPosition: Int) {
         adapterRepository.getItem(adapterPosition).cast<GithubUser>()?.let {
             if (it.isLike) {
-                onUnlikeUserInfo(adapterPosition, it)
+                if (::onUnlikeUserInfo.isInitialized) {
+                    onUnlikeUserInfo(adapterPosition, it)
+                }
             } else {
-                onLikeUserInfo(adapterPosition, it)
+                if (::onLikeUserInfo.isInitialized) {
+                    onLikeUserInfo(adapterPosition, it)
+                }
             }
         }
     }

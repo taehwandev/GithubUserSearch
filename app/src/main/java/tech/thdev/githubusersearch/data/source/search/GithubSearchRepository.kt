@@ -1,6 +1,5 @@
 package tech.thdev.githubusersearch.data.source.search
 
-import android.util.Log
 import io.reactivex.Single
 import tech.thdev.githubusersearch.data.GithubUser
 import tech.thdev.githubusersearch.db.GithubRoomDatabase
@@ -48,29 +47,41 @@ class GithubSearchRepository private constructor(private val githubApi: GithubIn
     fun searchUser(name: String, perPage: Int): Single<MutableList<GithubUser>> =
             githubRemoteDataSource.searchUser(name, getNowPage(name), perPage)
                     .flatMap { githubResponse ->
-                        // cache 꺼내와서 처리
-                        searchCacheMap[name] = (searchCacheMap[name]
-                                ?: mutableListOf()).also { it.addAll(githubResponse.items) }
-
-                        Log.d("GithubSearchRepository", "query : $name - ${searchCacheMap[name]}")
-
                         searchUserLocal(name)
                                 .map { localList ->
-                                    // return cache data
-                                    return@map (searchCacheMap[name]
-                                            ?: mutableListOf()).also { cacheList ->
+                                    githubResponse.items.also { itemList ->
                                         localList.forEach { localItem ->
                                             // 동기화
-                                            cacheList.filter {
+                                            itemList.filter {
                                                 it.id == localItem.id
                                             }.forEach { it.isLike = true }
                                         }
                                     }
                                 }
                     }
+                    .map { githubUserList ->
+                        // cache 꺼내와서 처리
+                        searchCacheMap[name] = (searchCacheMap[name]
+                                ?: mutableListOf()).also { it.addAll(githubUserList) }
+
+                        searchCacheMap[name]?.toMutableList() ?: mutableListOf()
+                    }
 
     fun getAllCacheItems(name: String): Single<MutableList<GithubUser>> {
         return Single.just(searchCacheMap[name] ?: mutableListOf())
+                .flatMap { cacheList ->
+                    searchUserLocal(name)
+                            .map { localList ->
+                                cacheList.forEach { cacheItem ->
+                                    cacheItem.isLike = false
+
+                                    localList.find { cacheItem.id == it.id }?.let {
+                                        cacheItem.isLike = true
+                                    }
+                                }
+                                cacheList
+                            }
+                }
     }
 
     fun clear() {

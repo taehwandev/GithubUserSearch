@@ -1,9 +1,9 @@
-package tech.thdev.githubusersearch.view.common.adapter.holder
+package tech.thdev.githubusersearch.view.github.adapter.holder
 
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.item_user_section.*
 import tech.thdev.githubusersearch.R
-import tech.thdev.githubusersearch.view.common.adapter.viewmodel.UserAdapterViewModel
+import tech.thdev.githubusersearch.view.github.adapter.viewmodel.UserAdapterViewModel
 import tech.thdev.simple.adapter.holder.BaseViewHolder
 
 class UserSectionViewHolder(parent: ViewGroup) :

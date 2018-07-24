@@ -1,4 +1,4 @@
-package tech.thdev.githubusersearch.view.common.viewmodel
+package tech.thdev.githubusersearch.view.github.viewmodel
 
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
