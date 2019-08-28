@@ -14,7 +14,6 @@ import android.view.Menu
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import com.google.android.gms.security.ProviderInstaller
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_fab_sort.*
 import tech.thdev.githubusersearch.R
@@ -78,9 +77,6 @@ class GithubUserActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        // Android 4.x Hand shake exception...
-        ProviderInstaller.installIfNeeded(applicationContext)
 
         fabOpenAnimation = AnimationUtils.loadAnimation(this, R.anim.fab_open)
         fabCloseAnimation = AnimationUtils.loadAnimation(this, R.anim.fab_close)
