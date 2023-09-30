@@ -15,15 +15,16 @@ androidGradlePlugin = "8.1.2"
 ## kotlin
 # https://github.com/JetBrains/kotlin
 kotlin = "1.9.10"
+# https://github.com/Kotlin/kotlinx.serialization
+kotlinSerializationJson = "1.6.0"
+
+## Coroutine
+# https://github.com/Kotlin/kotlinx.coroutines
+coroutines = "1.7.3"
 
 ## KSP
 # https://github.com/google/ksp
 ksp = "1.9.10-1.0.13"
-
-## RxJava
-# https://github.com/ReactiveX/RxAndroid
-rx-java = "3.1.5"
-rx-android = "3.0.2"
 
 ## AndroidX
 # https://developer.android.com/jetpack/androidx/releases/annotation
@@ -54,6 +55,8 @@ google-material = "1.11.0-alpha03"
 network-okhttp = "4.11.0"
 # https://github.com/square/retrofit
 network-retrofit = "2.9.0"
+# https://github.com/JakeWharton/retrofit2-kotlinx-serialization-converter
+network-retrofit-kotlinxSerializationConvert = "1.0.0"
 
 ## ImageLoader
 # https://github.com/bumptech/glide
@@ -74,10 +77,11 @@ test-junit5 = "5.9.3"
 [libraries]
 ## Kotlin
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+kotlin-serializationJson = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinSerializationJson" }
 
-## RxJava
-rx-java = { module = "io.reactivex.rxjava3:rxjava", version.ref = "rx-java" }
-rx-android = { module = "io.reactivex.rxjava3:rxandroid", version.ref = "rx-android" }
+## Coroutines
+coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 
 ## AndroidX
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidx-annotation" }
@@ -90,7 +94,6 @@ androidx-constraintLayout = { module = "androidx.constraintlayout:constraintlayo
 androidx-lifecycle-viewModel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidx-room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room" }
-androidx-room-rxjava3 = { module = "androidx.room:room-rxjava3", version.ref = "androidx-room" }
 
 ## Google
 google-material = { module = "com.google.android.material:material", version.ref = "google-material" }
@@ -99,8 +102,7 @@ google-material = { module = "com.google.android.material:material", version.ref
 network-okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "network-okhttp" }
 network-okhttp-logging = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "network-okhttp" }
 network-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "network-retrofit" }
-network-retrofit-convert-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "network-retrofit" }
-network-retrofit-adapter-rxjava3 = { module = "com.squareup.retrofit2:adapter-rxjava3", version.ref = "network-retrofit" }
+network-retrofit-kotlinxSerializationConvert = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "network-retrofit-kotlinxSerializationConvert" }
 
 ## Image loader
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
@@ -130,4 +132,5 @@ plugin-androidGradlePlugin = { module = "com.android.tools.build:gradle", versio
 androidApp = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 androidLibrary = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

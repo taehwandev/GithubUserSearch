@@ -39,6 +39,9 @@ android {
 
 dependencies {
     implementation(libs.kotlin.stdlib)
+    implementation(libs.kotlin.serializationJson)
+
+    implementation(libs.coroutines.android)
 
     implementation(libs.androidx.appCompat)
     implementation(libs.androidx.activity)
@@ -48,19 +51,14 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.androidx.lifecycle.viewModel)
     implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.rxjava3)
     ksp(libs.androidx.room.compiler)
 
     implementation(libs.google.material)
 
     implementation(libs.network.retrofit)
-    implementation(libs.network.retrofit.adapter.rxjava3)
-    implementation(libs.network.retrofit.convert.gson)
+    implementation(libs.network.retrofit.kotlinxSerializationConvert)
     implementation(libs.network.okhttp)
     implementation(libs.network.okhttp.logging)
-
-    implementation(libs.rx.java)
-    implementation(libs.rx.android)
 
     implementation(libs.glide)
 

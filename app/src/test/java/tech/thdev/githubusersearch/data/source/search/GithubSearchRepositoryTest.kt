@@ -4,8 +4,7 @@ import com.nhaarman.mockitokotlin2.mock
 import io.reactivex.subscribers.TestSubscriber
 import org.junit.Before
 import org.junit.Test
-import tech.thdev.githubusersearch.db.GitHubRoomDatabase
-import tech.thdev.githubusersearch.network.GitHubInterface
+import tech.thdev.githubusersearch.database.GitHubRoomDatabase
 import tech.thdev.githubusersearch.network.RetrofitFactory
 import tech.thdev.githubusersearch.util.NoNetworkException
 import tech.thdev.githubusersearch.util.createRetrofit
