@@ -1,16 +1,16 @@
 package tech.thdev.simple.adapter.holder
 
-import android.content.Context
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.util.Log
+import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 import tech.thdev.simple.adapter.viewmodel.BaseAdapterViewModel
 
 @Suppress("UNCHECKED_CAST")
 abstract class BaseViewHolder<in ITEM : Any, VIEW_MODEL : BaseAdapterViewModel>(
-        layoutRes: Int,
-        parent: ViewGroup,
-        protected val context: Context = parent.context) : AndroidViewHolder(
-        LayoutInflater.from(parent.context).inflate(layoutRes, parent, false)) {
+    itemView: View,
+) : RecyclerView.ViewHolder(
+    itemView,
+) {
 
     private lateinit var _viewModel: VIEW_MODEL
 
@@ -23,8 +23,10 @@ abstract class BaseViewHolder<in ITEM : Any, VIEW_MODEL : BaseAdapterViewModel>(
 
     fun checkItemAndBindViewHolder(item: Any?) {
         try {
+            Log.i("TEMP", "checkItemAndBindViewHolder")
             onBindViewHolder(item as? ITEM)
         } catch (e: Exception) {
+            e.printStackTrace()
             onBindViewHolder(null)
         }
     }

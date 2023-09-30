@@ -3,25 +3,25 @@ package tech.thdev.githubusersearch.view.github
 import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
-import android.support.annotation.ColorRes
-import android.support.annotation.DrawableRes
-import android.support.design.widget.BottomNavigationView
-import android.support.design.widget.FloatingActionButton
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.SearchView
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.include_fab_sort.*
+import androidx.activity.viewModels
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import tech.thdev.githubusersearch.R
-import tech.thdev.githubusersearch.data.source.search.GithubSearchRepository
-import tech.thdev.githubusersearch.db.GithubRoomDatabase
+import tech.thdev.githubusersearch.data.source.search.GitHubSearchRepository
+import tech.thdev.githubusersearch.databinding.ActivityMainBinding
+import tech.thdev.githubusersearch.db.GitHubRoomDatabase
 import tech.thdev.githubusersearch.network.RetrofitFactory
 import tech.thdev.githubusersearch.util.animationStart
-import tech.thdev.githubusersearch.util.inject
 import tech.thdev.githubusersearch.util.loadFragment
 import tech.thdev.githubusersearch.view.github.viewmodel.FilterStatusViewModel
 import tech.thdev.githubusersearch.view.github.viewmodel.SearchQueryViewModel
@@ -29,10 +29,11 @@ import tech.thdev.githubusersearch.view.github.viewmodel.SearchQueryViewModel
 
 class GithubUserActivity : AppCompatActivity() {
 
-    private val githubSearchRepository: GithubSearchRepository
-        get() = GithubSearchRepository.getInstance(
-                githubApi = RetrofitFactory.githubApi,
-                githubRoomDatabase = GithubRoomDatabase.getInstance(application))
+    private val githubSearchRepository: GitHubSearchRepository
+        get() = GitHubSearchRepository.getInstance(
+            githubApi = RetrofitFactory.githubApi,
+            githubRoomDatabase = GitHubRoomDatabase.getInstance(application)
+        )
 
     private val searchFragment: Fragment by lazy {
         GithubUserFragment.getInstance(GithubUserFragment.VIEW_TYPE_SEARCH, githubSearchRepository)
@@ -42,17 +43,9 @@ class GithubUserActivity : AppCompatActivity() {
         GithubUserFragment.getInstance(GithubUserFragment.VIEW_TYPE_LIKED, githubSearchRepository)
     }
 
-    private val searchQueryViewModel: SearchQueryViewModel by lazy(LazyThreadSafetyMode.NONE) {
-        SearchQueryViewModel::class.java.inject(this) {
-            SearchQueryViewModel()
-        }
-    }
+    private val searchQueryViewModel by viewModels<SearchQueryViewModel>()
 
-    private val filterStatusViewModel: FilterStatusViewModel by lazy(LazyThreadSafetyMode.NONE) {
-        FilterStatusViewModel::class.java.inject(this) {
-            FilterStatusViewModel()
-        }
-    }
+    private val filterStatusViewModel by viewModels<FilterStatusViewModel>()
 
     private lateinit var fabOpenAnimation: Animation
     private lateinit var fabCloseAnimation: Animation
@@ -60,28 +53,32 @@ class GithubUserActivity : AppCompatActivity() {
     private var isShowFloatingMenu: Boolean = false
 
     private val mOnNavigationItemSelectedListener =
-            BottomNavigationView.OnNavigationItemSelectedListener { item ->
-                when (item.itemId) {
-                    R.id.navigation_search -> {
-                        searchFragment.loadFragment()
-                        return@OnNavigationItemSelectedListener true
-                    }
-                    R.id.navigation_liked -> {
-                        likeFragment.loadFragment()
-                        return@OnNavigationItemSelectedListener true
-                    }
+        BottomNavigationView.OnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_search -> {
+                    searchFragment.loadFragment()
+                    return@OnNavigationItemSelectedListener true
                 }
-                false
+
+                R.id.navigation_liked -> {
+                    likeFragment.loadFragment()
+                    return@OnNavigationItemSelectedListener true
+                }
             }
+            false
+        }
+
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
+        setContentView(binding.root)
 
         fabOpenAnimation = AnimationUtils.loadAnimation(this, R.anim.fab_open)
         fabCloseAnimation = AnimationUtils.loadAnimation(this, R.anim.fab_close)
 
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        binding.navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         searchFragment.loadFragment()
         filterStatusViewModel.onUpdateFilterIcon = ::hideFloatingSubMenu
@@ -89,9 +86,9 @@ class GithubUserActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
 
-        fab_sort.setOnClickListener {
+        binding.includeFabSort.fabSort.setOnClickListener {
             if (isShowFloatingMenu) {
                 hideFloatingSubMenu()
             } else {
@@ -99,7 +96,7 @@ class GithubUserActivity : AppCompatActivity() {
             }
         }
 
-        view_fab_container.run {
+        binding.includeFabSort.viewFabContainer.run {
             this.isClickable = false
             this.isFocusable = false
             setOnTouchListener { _, _ ->
@@ -107,49 +104,55 @@ class GithubUserActivity : AppCompatActivity() {
             }
         }
 
-        fab_sort_default.setOnClickListener {
+        binding.includeFabSort.fabSortDefault.setOnClickListener {
             filterStatusViewModel.selectFilter(FilterStatusViewModel.FilterType.FILTER_SORT_DEFAULT)
         }
-        fab_sort_name.setOnClickListener {
+        binding.includeFabSort.fabSortName.setOnClickListener {
             filterStatusViewModel.selectFilter(FilterStatusViewModel.FilterType.FILTER_SORT_NAME)
         }
-        fab_sort_date_of_registration.setOnClickListener {
+        binding.includeFabSort.fabSortDateOfRegistration.setOnClickListener {
             filterStatusViewModel.selectFilter(FilterStatusViewModel.FilterType.FILTER_SORT_DATE_OF_REGISTRATION)
         }
     }
 
     private fun showFloatingSubMenu() {
         isShowFloatingMenu = true
-        fab_sort.changeButton(R.drawable.ic_close_white_24dp, true, R.color.colorFabBackgroundColor)
-        view_sort_default.startOpenAnimation()
-        view_sort_name.startOpenAnimation()
-        view_sort_date_of_registration.startOpenAnimation()
+
+        binding.includeFabSort.run {
+            fabSort.changeButton(R.drawable.ic_close_white_24dp, true, R.color.colorFabBackgroundColor)
+            viewSortDefault.startOpenAnimation()
+            viewSortName.startOpenAnimation()
+            viewSortDateOfRegistration.startOpenAnimation()
+        }
     }
 
     private fun hideFloatingSubMenu(filterIcon: Int = R.drawable.ic_sort_numbers) {
         isShowFloatingMenu = false
-        fab_sort.changeButton(filterIcon, false, R.color.colorTransparent)
+        binding.includeFabSort.run {
+            fabSort.changeButton(filterIcon, false, R.color.colorTransparent)
 
-        view_sort_default.startCloseAnimation()
-        view_sort_name.startCloseAnimation()
-        view_sort_date_of_registration.startCloseAnimation()
+            viewSortDefault.startCloseAnimation()
+            viewSortName.startCloseAnimation()
+            viewSortDateOfRegistration.startCloseAnimation()
+        }
     }
 
     private fun FloatingActionButton.changeButton(
-            @DrawableRes drawableRes: Int, isClickable: Boolean, @ColorRes colorRes: Int) {
+        @DrawableRes drawableRes: Int, isClickable: Boolean, @ColorRes colorRes: Int
+    ) {
         this.setImageResource(drawableRes)
-        view_fab_container.run {
+        binding.includeFabSort.viewFabContainer.run {
             this.isClickable = isClickable
             this.isFocusable = isClickable
             setBackgroundResource(colorRes)
-                setOnTouchListener { _, _ ->
-                    if (isClickable) {
-                        hideFloatingSubMenu()
-                        true
-                    } else {
-                        false
-                    }
+            setOnTouchListener { _, _ ->
+                if (isClickable) {
+                    hideFloatingSubMenu()
+                    true
+                } else {
+                    false
                 }
+            }
         }
     }
 

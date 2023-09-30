@@ -4,27 +4,27 @@ import com.nhaarman.mockitokotlin2.mock
 import io.reactivex.subscribers.TestSubscriber
 import org.junit.Before
 import org.junit.Test
-import tech.thdev.githubusersearch.db.GithubRoomDatabase
-import tech.thdev.githubusersearch.network.GithubInterface
+import tech.thdev.githubusersearch.db.GitHubRoomDatabase
+import tech.thdev.githubusersearch.network.GitHubInterface
 import tech.thdev.githubusersearch.network.RetrofitFactory
 import tech.thdev.githubusersearch.util.NoNetworkException
 import tech.thdev.githubusersearch.util.createRetrofit
 
 class GithubSearchRepositoryTest {
 
-    private lateinit var api: GithubInterface
-    private lateinit var githubSearchRepository: GithubSearchRepository
+    private lateinit var api: GitHubInterface
+    private lateinit var githubSearchRepository: GitHubSearchRepository
 
     private var isAvailableNetwork = true
 
-    private val database: GithubRoomDatabase = mock()
+    private val database: GitHubRoomDatabase = mock()
 
     @Before
     fun setUp() {
-        api = createRetrofit(GithubInterface::class.java, RetrofitFactory.baseUrl) {
+        api = createRetrofit(GitHubInterface::class.java, RetrofitFactory.baseUrl) {
             isAvailableNetwork
         }
-        githubSearchRepository = GithubSearchRepository.getInstance(api, database)
+        githubSearchRepository = GitHubSearchRepository.getInstance(api, database)
     }
 
     @Test

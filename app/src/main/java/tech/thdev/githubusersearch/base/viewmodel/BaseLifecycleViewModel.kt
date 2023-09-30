@@ -1,8 +1,8 @@
 package tech.thdev.githubusersearch.base.viewmodel
 
-import android.arch.lifecycle.ViewModel
 import android.util.Log
-import io.reactivex.disposables.CompositeDisposable
+import androidx.lifecycle.ViewModel
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 abstract class BaseLifecycleViewModel : ViewModel() {
 

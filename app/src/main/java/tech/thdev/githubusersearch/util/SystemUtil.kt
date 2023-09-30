@@ -4,9 +4,9 @@ package tech.thdev.githubusersearch.util
 
 import android.content.Context
 import android.net.ConnectivityManager
-import android.support.annotation.IdRes
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
+import androidx.annotation.IdRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 
 
 inline fun Context.isOnline(): Boolean =

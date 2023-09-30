@@ -1,8 +1,8 @@
 package tech.thdev.githubusersearch.view.github.viewmodel
 
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import tech.thdev.githubusersearch.R
 import tech.thdev.githubusersearch.base.viewmodel.BaseLifecycleViewModel
 import tech.thdev.githubusersearch.util.plusAssign
@@ -25,20 +25,20 @@ class FilterStatusViewModel : BaseLifecycleViewModel() {
 
     init {
         disposables += filterStatusChangeSubject
-                .observeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map {
-                    it.also { prevFilterType = it }
+            .observeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                it.also { prevFilterType = it }
+            }
+            .subscribe {
+                if (::updateFilterStatus.isInitialized) {
+                    updateFilterStatus(it)
                 }
-                .subscribe {
-                    if (::updateFilterStatus.isInitialized) {
-                        updateFilterStatus(it)
-                    }
 
-                    if (::onUpdateFilterIcon.isInitialized) {
-                        onUpdateFilterIcon(filterIcon)
-                    }
+                if (::onUpdateFilterIcon.isInitialized) {
+                    onUpdateFilterIcon(filterIcon)
                 }
+            }
     }
 
     private val filterIcon: Int

@@ -5,5 +5,8 @@ package tech.thdev.simple.adapter.data
  */
 sealed class BaseAdapterItem {
 
-    data class DefaultAdapterItem(val viewType: Int, val item: Any?): BaseAdapterItem()
+    data class DefaultAdapterItem(
+        val viewType: Int,
+        val item: Any?,
+    ) : BaseAdapterItem()
 }

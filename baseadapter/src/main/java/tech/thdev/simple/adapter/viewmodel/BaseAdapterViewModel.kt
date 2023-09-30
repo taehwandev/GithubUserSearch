@@ -2,7 +2,9 @@ package tech.thdev.simple.adapter.viewmodel
 
 import tech.thdev.simple.adapter.data.source.AdapterRepositoryInterface
 
-abstract class BaseAdapterViewModel(val adapterRepository: AdapterRepositoryInterface) {
+abstract class BaseAdapterViewModel(
+    val adapterRepository: AdapterRepositoryInterface,
+) {
 
     lateinit var notifyDataSetChanged: () -> Unit
 

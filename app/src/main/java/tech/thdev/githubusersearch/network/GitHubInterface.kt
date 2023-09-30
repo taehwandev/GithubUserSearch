@@ -1,12 +1,12 @@
 package tech.thdev.githubusersearch.network
 
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
-import tech.thdev.githubusersearch.data.GithubResponse
+import tech.thdev.githubusersearch.data.GitHubResponse
 
 
-interface GithubInterface {
+interface GitHubInterface {
 
     /**
      * Github user search api - https://developer.github.com/v3/search/#search-users
@@ -20,7 +20,8 @@ interface GithubInterface {
      */
     @GET("/search/users?")
     fun searchUser(
-            @Query(value = "q", encoded = true) userKeyword: String,
-            @Query("page") page: Int,
-            @Query("per_page") perPage: Int): Single<GithubResponse>
+        @Query(value = "q", encoded = true) userKeyword: String,
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int,
+    ): Single<GitHubResponse>
 }
