@@ -5,7 +5,7 @@ import tech.thdev.simple.adapter.data.BaseAdapterItem
 abstract class AbstractAdapterRepository<T : BaseAdapterItem> : AdapterRepositoryInterface {
 
     protected fun Int.getIndexOfBounds() =
-            this.takeIf { this in 0..itemCount }
+        this.takeIf { this in 0..itemCount }
 
     protected val list = mutableListOf<T>()
 

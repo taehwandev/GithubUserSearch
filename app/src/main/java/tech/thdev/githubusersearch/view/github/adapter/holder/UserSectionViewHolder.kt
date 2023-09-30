@@ -1,19 +1,22 @@
 package tech.thdev.githubusersearch.view.github.adapter.holder
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.item_user_section.*
-import tech.thdev.githubusersearch.R
+import tech.thdev.githubusersearch.databinding.ItemUserSectionBinding
 import tech.thdev.githubusersearch.view.github.adapter.viewmodel.UserAdapterViewModel
 import tech.thdev.simple.adapter.holder.BaseViewHolder
 
-class UserSectionViewHolder(parent: ViewGroup) :
-        BaseViewHolder<String, UserAdapterViewModel>(R.layout.item_user_section, parent) {
+class UserSectionViewHolder(
+    parent: ViewGroup,
+    private val binding: ItemUserSectionBinding = ItemUserSectionBinding.inflate(LayoutInflater.from(parent.context)),
+) :
+    BaseViewHolder<String, UserAdapterViewModel>(binding.root) {
 
     override fun UserAdapterViewModel.onInitViewModel() {
         // Do nothing.
     }
 
     override fun onBindViewHolder(item: String?) {
-        tv_title.text = item
+        binding.tvTitle.text = item
     }
 }

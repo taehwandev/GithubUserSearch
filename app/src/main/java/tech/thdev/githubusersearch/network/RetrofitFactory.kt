@@ -8,8 +8,8 @@ object RetrofitFactory {
 
     const val baseUrl = "https://api.github.com"
 
-    val githubApi: GithubInterface by lazy {
-        createRetrofit(GithubInterface::class.java, baseUrl) {
+    val githubApi: GitHubInterface by lazy {
+        createRetrofit(GitHubInterface::class.java, baseUrl) {
             GithubApp.context.isOnline()
         }
     }

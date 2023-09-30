@@ -1,14 +1,14 @@
 package tech.thdev.githubusersearch.common.viewmodel
 
-import io.reactivex.SingleTransformer
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.SingleTransformer
+import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import tech.thdev.githubusersearch.base.viewmodel.BaseLifecycleViewModel
 import tech.thdev.githubusersearch.util.NoNetworkException
 import tech.thdev.githubusersearch.util.plusAssign
 
-abstract class BaseGithubViewModel : BaseLifecycleViewModel() {
+abstract class BaseGitHubViewModel : BaseLifecycleViewModel() {
 
     lateinit var onShowProgress: () -> Unit
 
@@ -34,42 +34,42 @@ abstract class BaseGithubViewModel : BaseLifecycleViewModel() {
 
     init {
         disposables += uiThreadSubject
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ it() }, {})
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ it() }, {})
 
         disposables += databaseHelperSubject
-                .observeOn(Schedulers.io())
-                .map { (first, seconds) ->
-                    first()
-                    seconds
-                }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    it()
-                }, {
-                    it.printStackTrace()
-                })
+            .observeOn(Schedulers.io())
+            .map { (first, seconds) ->
+                first()
+                seconds
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                it()
+            }, {
+                it.printStackTrace()
+            })
     }
 
-    protected fun <T> progressCompose() =
-            SingleTransformer<T, T> {
-                it
-                        .doOnSubscribe {
-                            isLoading = true
+    protected fun <T : Any> progressCompose() =
+        SingleTransformer<T, T> {
+            it
+                .doOnSubscribe {
+                    isLoading = true
 
-                            uiThreadSubject.onNext {
-                                if (::onShowProgress.isInitialized) {
-                                    onShowProgress()
-                                }
-                            }
+                    uiThreadSubject.onNext {
+                        if (::onShowProgress.isInitialized) {
+                            onShowProgress()
                         }
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .doOnSuccess {
-                            uiThreadSubject.onNext {
-                                hideProgress()
-                            }
-                        }
-            }
+                    }
+                }
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSuccess {
+                    uiThreadSubject.onNext {
+                        hideProgress()
+                    }
+                }
+        }
 
     protected fun onErrorThrowable(error: Throwable) {
         isLoading = false
@@ -84,6 +84,7 @@ abstract class BaseGithubViewModel : BaseLifecycleViewModel() {
                     }
                 }
             }
+
             else -> {
                 uiThreadSubject.onNext {
                     hideProgress()

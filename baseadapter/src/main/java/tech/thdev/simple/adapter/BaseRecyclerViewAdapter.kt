@@ -1,24 +1,26 @@
 package tech.thdev.simple.adapter
 
-import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import tech.thdev.simple.adapter.data.source.AdapterRepository
 import tech.thdev.simple.adapter.data.source.AdapterRepositoryInterface
 import tech.thdev.simple.adapter.holder.BaseViewHolder
 import tech.thdev.simple.adapter.viewmodel.BaseAdapterViewModel
 
 abstract class BaseRecyclerViewAdapter<VIEW_MODEL : BaseAdapterViewModel>(
-        createViewModel: (adapterRepository: AdapterRepositoryInterface) -> VIEW_MODEL) :
-        RecyclerView.Adapter<BaseViewHolder<*, VIEW_MODEL>>() {
+    createViewModel: (adapterRepository: AdapterRepositoryInterface) -> VIEW_MODEL,
+) : RecyclerView.Adapter<BaseViewHolder<*, VIEW_MODEL>>() {
 
     // Adapter data.
-    private val adapterRepository: AdapterRepositoryInterface by lazy(LazyThreadSafetyMode.NONE) {
+    private val adapterRepository: AdapterRepositoryInterface by lazy {
         AdapterRepository()
     }
 
     val viewModel: VIEW_MODEL = createViewModel(adapterRepository)
 
     init {
+        Log.d("TEMP", "adapterViewModel ${viewModel.hashCode()}")
         viewModel.run {
             notifyDataSetChanged = this@BaseRecyclerViewAdapter::notifyDataSetChanged
             notifyItemChanged = this@BaseRecyclerViewAdapter::notifyItemChanged
@@ -31,15 +33,17 @@ abstract class BaseRecyclerViewAdapter<VIEW_MODEL : BaseAdapterViewModel>(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*, VIEW_MODEL> =
-            createViewHolder(viewType, parent).also { it.viewModel = viewModel }
+        createViewHolder(viewType, parent).also {
+            it.viewModel = viewModel
+        }
 
     abstract fun createViewHolder(viewType: Int, parent: ViewGroup): BaseViewHolder<*, VIEW_MODEL>
 
     override fun getItemCount(): Int =
-            adapterRepository.itemCount
+        adapterRepository.itemCount
 
     override fun getItemViewType(position: Int): Int =
-            adapterRepository.getItemViewType(position)
+        adapterRepository.getItemViewType(position)
 
     override fun onBindViewHolder(holder: BaseViewHolder<*, VIEW_MODEL>, position: Int) {
         holder.checkItemAndBindViewHolder(adapterRepository.getItem(position))

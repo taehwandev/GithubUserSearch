@@ -1,23 +1,30 @@
 package tech.thdev.githubusersearch.view.github.adapter.viewmodel
 
-import tech.thdev.githubusersearch.data.GithubUser
+import android.util.Log
+import tech.thdev.githubusersearch.data.GitHubUser
 import tech.thdev.simple.adapter.data.source.AdapterRepositoryInterface
 import tech.thdev.simple.adapter.util.cast
 import tech.thdev.simple.adapter.viewmodel.BaseAdapterViewModel
 
-class UserAdapterViewModel(adapterRepository: AdapterRepositoryInterface) : BaseAdapterViewModel(adapterRepository) {
+class UserAdapterViewModel(
+    adapterRepository: AdapterRepositoryInterface,
+) : BaseAdapterViewModel(adapterRepository) {
+
+    init {
+        Log.d("TEMP", "adapterViewModel ${this.hashCode()}")
+    }
 
     companion object {
         const val VIEW_TYPE_SECTION = 1000
         const val VIEW_TYPE_ITEM = 2000
     }
 
-    lateinit var onLikeUserInfo: (adapterPosition: Int, item: GithubUser) -> Unit
+    lateinit var onLikeUserInfo: (adapterPosition: Int, item: GitHubUser) -> Unit
 
-    lateinit var onUnlikeUserInfo: (adapterPosition: Int, item: GithubUser) -> Unit
+    lateinit var onUnlikeUserInfo: (adapterPosition: Int, item: GitHubUser) -> Unit
 
     fun onClickUserItem(adapterPosition: Int) {
-        adapterRepository.getItem(adapterPosition).cast<GithubUser>()?.let {
+        adapterRepository.getItem(adapterPosition).cast<GitHubUser>()?.let {
             if (it.isLike) {
                 if (::onUnlikeUserInfo.isInitialized) {
                     onUnlikeUserInfo(adapterPosition, it)
