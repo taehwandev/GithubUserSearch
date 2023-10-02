@@ -1,0 +1,50 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Theme.MyApplication" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/purple_700</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Theme.MyApplication.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="FloatingActionButtonLabel">
+        <item name="android:textColor">@color/design_default_color_on_primary</item>
+        <item name="android:textSize">@dimen/fab_label_text_size</item>
+        <item name="android:padding">@dimen/fab_label_padding</item>
+        <item name="android:layout_margin">@dimen/fab_label_end_margin</item>
+        <item name="android:background">@drawable/bg_fab_label_background</item>
+    </style>
+
+    <style name="FloatingActionButtonLabel.Default" parent="FloatingActionButtonLabel" />
+
+    <style name="FloatingActionButton">
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:tint">@color/design_default_color_on_primary</item>
+        <item name="backgroundTint">@color/design_default_color_on_primary</item>
+        <item name="fabSize">normal</item>
+        <item name="android:layout_margin">@dimen/fab_margin</item>
+    </style>
+
+    <style name="FloatingActionButton.Mini">
+        <item name="fabSize">mini</item>
+        <item name="android:layout_margin">@dimen/fab_mini_margin</item>
+        <item name="maxImageSize">@dimen/fab_mini_max_image_size</item>
+    </style>
+</resources>

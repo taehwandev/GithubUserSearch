@@ -13,7 +13,7 @@ inline fun View.animationStart(
     this.startAnimation(animation.also {
         it.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationRepeat(p0: Animation?) {
-
+                // Do nothing.
             }
 
             override fun onAnimationEnd(p0: Animation?) {

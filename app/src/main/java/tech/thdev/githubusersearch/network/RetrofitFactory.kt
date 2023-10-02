@@ -1,16 +1,20 @@
 package tech.thdev.githubusersearch.network
 
-import tech.thdev.githubusersearch.GithubApp
+import kotlinx.serialization.json.Json
+import tech.thdev.githubusersearch.data.GitHubApi
 import tech.thdev.githubusersearch.util.createRetrofit
-import tech.thdev.githubusersearch.util.isOnline
 
 object RetrofitFactory {
 
-    const val baseUrl = "https://api.github.com"
-
-    val githubApi: GitHubInterface by lazy {
-        createRetrofit(GitHubInterface::class.java, baseUrl) {
-            GithubApp.context.isOnline()
-        }
+    val gitHubApi: GitHubApi by lazy {
+        createRetrofit(
+            json = Json {
+                coerceInputValues = true
+                ignoreUnknownKeys = true
+            },
+            baseUrl = BASE_URL,
+        ).create(GitHubApi::class.java)
     }
+
+    private const val BASE_URL = "https://api.github.com"
 }

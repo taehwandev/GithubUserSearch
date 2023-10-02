@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.androidApp)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.ksp)
+    id("kotlinx-serialization")
 }
 
 android {
@@ -26,43 +27,57 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         viewBinding = true
+    }
+    tasks.withType<Test> {
+        useJUnitPlatform()
     }
 }
 
 dependencies {
     implementation(libs.kotlin.stdlib)
+    implementation(libs.kotlin.serializationJson)
+
+    implementation(libs.coroutines.android)
 
     implementation(libs.androidx.appCompat)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.fragment)
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
     implementation(libs.androidx.recyclerView)
     implementation(libs.androidx.constraintLayout)
     implementation(libs.androidx.core)
     implementation(libs.androidx.lifecycle.viewModel)
+    implementation(libs.androidx.room)
     implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.rxjava3)
     ksp(libs.androidx.room.compiler)
 
     implementation(libs.google.material)
 
     implementation(libs.network.retrofit)
-    implementation(libs.network.retrofit.adapter.rxjava3)
-    implementation(libs.network.retrofit.convert.gson)
+    implementation(libs.network.retrofit.kotlinxSerializationConvert)
     implementation(libs.network.okhttp)
     implementation(libs.network.okhttp.logging)
 
-    implementation(libs.rx.java)
-    implementation(libs.rx.android)
-
     implementation(libs.glide)
 
-    implementation(project(":baseadapter"))
+    libs.test.run {
+        testImplementation(androidx.core)
+        testImplementation(androidx.runner)
+        testImplementation(androidx.junit)
+        testImplementation(mockito.kotlin)
+        testImplementation(junit5)
+        testImplementation(junit5.engine)
+        testRuntimeOnly(junit5.vintage)
+        testImplementation(coroutines)
+        testImplementation(coroutines.turbine)
+    }
 }

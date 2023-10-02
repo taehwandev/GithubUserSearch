@@ -16,4 +16,4 @@ dependencyResolutionManagement {
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "GitHubUserSearch"
 
-include(":app", ":baseadapter")
+include(":app")
