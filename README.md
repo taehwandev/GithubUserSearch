@@ -14,6 +14,7 @@ Search page and liked page
 
 |           Sample name           |     link     |
 |:-------------------------------:|:-------------------------------:|
+| MVVM + Navigation + coroutines example / Hilt | [link](https://github.com/taehwandev/GithubUserSearch/tree/MVVM-Hilt-coroutines-sample) |
 | MVVM + Navigation + coroutines example / Manual dependency injection. | [link](https://github.com/taehwandev/GithubUserSearch/tree/MVVM-ManualDependencyInjection-coroutines-sample) |
 | MVVM + Navigation + RxJava example / Manual dependency injection. | [link](https://github.com/taehwandev/GithubUserSearch/tree/MVVM-ManualDependencyInjection-coroutines-sample) |
 
@@ -35,6 +36,8 @@ all library info : [libs.versions.toml](gradle/libs.versions.toml)
     - RecyclerView
 - async
     - Coroutines
+- DI
+    - Hilt
 - Image loader
     - glide
 - Test
