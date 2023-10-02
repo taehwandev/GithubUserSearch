@@ -44,6 +44,8 @@ androidx-constraintLayout = "2.1.4"
 androidx-lifecycle = "2.6.2"
 # https://developer.android.com/jetpack/androidx/releases/room
 androidx-room = "2.5.2"
+# https://developer.android.com/jetpack/androidx/releases/navigation
+androidx-navigation = "2.7.3"
 
 ## Google
 # https://github.com/material-components/material-components-android/releases
@@ -91,6 +93,8 @@ androidx-lifecycle-viewModel = { module = "androidx.lifecycle:lifecycle-viewmode
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidx-room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room" }
 androidx-room-rxjava3 = { module = "androidx.room:room-rxjava3", version.ref = "androidx-room" }
+androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidx-navigation" }
+androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidx-navigation" }
 
 ## Google
 google-material = { module = "com.google.android.material:material", version.ref = "google-material" }

@@ -26,14 +26,17 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         viewBinding = true
+    }
+    tasks.withType<Test> {
+        useJUnitPlatform()
     }
 }
 
@@ -43,6 +46,8 @@ dependencies {
     implementation(libs.androidx.appCompat)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.fragment)
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
     implementation(libs.androidx.recyclerView)
     implementation(libs.androidx.constraintLayout)
     implementation(libs.androidx.core)
@@ -64,5 +69,13 @@ dependencies {
 
     implementation(libs.glide)
 
-    implementation(project(":baseadapter"))
+    libs.test.run {
+        testImplementation(androidx.core)
+        testImplementation(androidx.runner)
+        testImplementation(androidx.junit)
+        testImplementation(mockito.kotlin)
+        testImplementation(junit5)
+        testImplementation(junit5.engine)
+        testRuntimeOnly(junit5.vintage)
+    }
 }
