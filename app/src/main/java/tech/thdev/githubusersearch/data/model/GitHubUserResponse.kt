@@ -12,8 +12,8 @@ data class GitHubUserResponse(
 
 @Serializable
 data class GitHubUserInfoResponse(
-    @SerialName("login") val login: String,
-    @SerialName("id") val id: Int,
-    @SerialName("avatar_url") val avatarUrl: String,
-    @SerialName("score") val score: Double,
+    @SerialName("id") val id: Int = 0,
+    @SerialName("login") val login: String = "",
+    @SerialName("avatar_url") val avatarUrl: String = "",
+    @SerialName("score") val score: Double = 0.0,
 )

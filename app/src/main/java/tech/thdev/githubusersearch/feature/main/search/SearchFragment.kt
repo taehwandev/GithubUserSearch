@@ -1,7 +1,6 @@
 package tech.thdev.githubusersearch.feature.main.search
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +21,7 @@ import tech.thdev.githubusersearch.database.GitHubDatabase
 import tech.thdev.githubusersearch.databinding.FragmentSearchBinding
 import tech.thdev.githubusersearch.domain.GitHubSearchRepository
 import tech.thdev.githubusersearch.feature.main.FilterStatusViewModel
+import tech.thdev.githubusersearch.feature.main.LikeChangeViewModel
 import tech.thdev.githubusersearch.feature.main.SearchQueryViewModel
 import tech.thdev.githubusersearch.feature.main.adapter.UserRecyclerAdapter
 import tech.thdev.githubusersearch.feature.main.model.MainListUiState
@@ -58,6 +58,8 @@ class SearchFragment : Fragment() {
         }
     )
 
+    private val likeChangeViewModel by viewModels<LikeChangeViewModel>()
+
     private val adapterScrollListener by lazy {
         adapterScrollLinearLayoutManagerListener(searchViewModel::loadMore)
     }
@@ -87,10 +89,6 @@ class SearchFragment : Fragment() {
                                 (it.message ?: getString(R.string.message_unknown_error)).showErrorView()
                             }
 
-                            is MainListUiState.NetworkFail -> {
-                                getString(R.string.message_network_error).showErrorView()
-                            }
-
                             is MainListUiState.UserItems -> {
                                 showEmptyView(it.items.isEmpty())
                                 userRecyclerAdapter.setItems(it.items)
@@ -110,7 +108,7 @@ class SearchFragment : Fragment() {
                     .launchIn(this)
 
                 searchQueryViewModel.searchQuery
-                    .onEach(searchViewModel::search)
+                    .onEach(searchViewModel::updateKeyword)
                     .launchIn(this)
 
                 filterStatusViewModel.filterUiState
@@ -127,7 +125,7 @@ class SearchFragment : Fragment() {
         }
 
         userRecyclerAdapter.onClick = {
-            searchViewModel.selectedLikeChange(it)
+            likeChangeViewModel.selectedLikeChange(it)
         }
     }
 

@@ -1,9 +1,21 @@
 package tech.thdev.githubusersearch.domain.model
 
 data class GitHubUserEntity(
-    val login: String,
     val id: Int,
+    val login: String,
     val avatarUrl: String,
     val score: Double,
     val isLike: Boolean,
-)
+) {
+
+    companion object {
+
+        val Default = GitHubUserEntity(
+            login = "",
+            id = 0,
+            avatarUrl = "",
+            score = 0.0,
+            isLike = false,
+        )
+    }
+}

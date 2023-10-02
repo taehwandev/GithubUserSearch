@@ -19,6 +19,7 @@ import tech.thdev.githubusersearch.data.GitHubSearchRepositoryImpl
 import tech.thdev.githubusersearch.database.GitHubDatabase
 import tech.thdev.githubusersearch.databinding.FragmentLikeBinding
 import tech.thdev.githubusersearch.domain.GitHubSearchRepository
+import tech.thdev.githubusersearch.feature.main.LikeChangeViewModel
 import tech.thdev.githubusersearch.feature.main.adapter.UserRecyclerAdapter
 import tech.thdev.githubusersearch.feature.main.model.MainListUiState
 import tech.thdev.githubusersearch.network.RetrofitFactory
@@ -49,6 +50,8 @@ class LikeFragment : Fragment() {
         }
     )
 
+    private val likeChangeViewModel by viewModels<LikeChangeViewModel>()
+
     private var _binding: FragmentLikeBinding? = null
     private val binding: FragmentLikeBinding
         get() = _binding!!
@@ -74,10 +77,6 @@ class LikeFragment : Fragment() {
                                 (it.message ?: getString(R.string.message_unknown_error)).showErrorView()
                             }
 
-                            is MainListUiState.NetworkFail -> {
-                                getString(R.string.message_network_error).showErrorView()
-                            }
-
                             is MainListUiState.UserItems -> {
                                 showEmptyView(it.items.isEmpty())
                                 userRecyclerAdapter.setItems(it.items)
@@ -91,7 +90,7 @@ class LikeFragment : Fragment() {
         binding.recyclerView.adapter = userRecyclerAdapter
 
         userRecyclerAdapter.onClick = {
-            likeViewModel.selectedLikeChange(it)
+            likeChangeViewModel.selectedLikeChange(it)
         }
     }
 

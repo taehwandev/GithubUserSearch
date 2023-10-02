@@ -15,12 +15,13 @@ import tech.thdev.githubusersearch.domain.GitHubSearchRepository
 import tech.thdev.githubusersearch.domain.model.GitHubSortType
 import tech.thdev.githubusersearch.domain.model.GitHubUserEntity
 
-class GitHubSearchRepositoryImpl private constructor(
+class GitHubSearchRepositoryImpl internal constructor(
     private val gitHubApi: GitHubApi,
     private val gitHubUserDao: GitHubUserDao,
 ) : GitHubSearchRepository {
 
-    private val sortList = MutableStateFlow(GitHubSortType.FILTER_SORT_DEFAULT)
+    @VisibleForTesting
+    val sortList = MutableStateFlow(GitHubSortType.FILTER_SORT_DEFAULT)
 
     @VisibleForTesting
     val cacheList = mutableListOf<GitHubUserInfoResponse>()
@@ -40,9 +41,7 @@ class GitHubSearchRepositoryImpl private constructor(
             if (cacheSearchKeyword == searchKeyword) {
                 page++
             } else {
-                cacheList.clear()
-                page = 1
-                endPage = false
+                clear()
             }
             emit(true)
         }
