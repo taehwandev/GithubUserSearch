@@ -16,7 +16,7 @@ inline fun ImageView.loadUrl(
     crossinline onResourceReady: (() -> Boolean) = { false },
     crossinline onLoadFail: (() -> Boolean) = { false }
 ) {
-    Glide.with(this.context)
+    Glide.with(context)
         .load(url)
         .apply(RequestOptions.placeholderOf(placeholder))
         .listener(object : RequestListener<Drawable> {

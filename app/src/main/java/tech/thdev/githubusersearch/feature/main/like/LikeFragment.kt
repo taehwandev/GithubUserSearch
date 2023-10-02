@@ -50,7 +50,18 @@ class LikeFragment : Fragment() {
         }
     )
 
-    private val likeChangeViewModel by viewModels<LikeChangeViewModel>()
+    @Suppress("UNCHECKED_CAST")
+    private val likeChangeViewModel by viewModels<LikeChangeViewModel>(
+        factoryProducer = {
+            object : ViewModelProvider.Factory {
+                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                    return LikeChangeViewModel(
+                        gitHubSearchRepository = gitHubSearchRepository,
+                    ) as T
+                }
+            }
+        }
+    )
 
     private var _binding: FragmentLikeBinding? = null
     private val binding: FragmentLikeBinding
