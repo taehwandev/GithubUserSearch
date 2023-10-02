@@ -2,12 +2,15 @@ package tech.thdev.githubusersearch.feature.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.launch
 import tech.thdev.githubusersearch.domain.GitHubSearchRepository
 import tech.thdev.githubusersearch.domain.model.GitHubUserEntity
 import tech.thdev.githubusersearch.feature.main.model.MainListUiState
 
-class LikeChangeViewModel(
+@HiltViewModel
+class LikeChangeViewModel @Inject constructor(
     private val gitHubSearchRepository: GitHubSearchRepository,
 ) : ViewModel() {
 

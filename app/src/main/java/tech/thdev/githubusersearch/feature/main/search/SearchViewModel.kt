@@ -2,7 +2,12 @@ package tech.thdev.githubusersearch.feature.main.search
 
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
+import javax.inject.Named
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,10 +24,16 @@ import tech.thdev.githubusersearch.domain.model.GitHubSortType
 import tech.thdev.githubusersearch.feature.main.model.MainListUiState
 import tech.thdev.githubusersearch.feature.main.model.convert.convert
 
-class SearchViewModel(
+class SearchViewModel @AssistedInject constructor(
     private val gitHubSearchRepository: GitHubSearchRepository,
-    test: Boolean = false,
+    @Assisted isTest: Boolean = false,
 ) : ViewModel() {
+
+    @AssistedFactory
+    interface SearchAssistedFactory {
+
+        fun create(@Named("is_test") isTest: Boolean): SearchViewModel
+    }
 
     private val _showProgress = MutableStateFlow(false)
     val showProgress: StateFlow<Boolean> get() = _showProgress.asStateFlow()
@@ -37,7 +48,7 @@ class SearchViewModel(
     val flowSearchKeyword = MutableStateFlow("")
 
     init {
-        if (test.not()) {
+        if (isTest.not()) {
             loadData()
                 .launchIn(viewModelScope)
         }
@@ -95,5 +106,20 @@ class SearchViewModel(
 
     override fun onCleared() {
         gitHubSearchRepository.clear()
+    }
+
+    companion object {
+
+        fun provideFactory(
+            assistedFactory: SearchAssistedFactory,
+            isTest: Boolean,
+        ): ViewModelProvider.Factory =
+            object : ViewModelProvider.Factory {
+
+                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                    @Suppress("UNCHECKED_CAST")
+                    return assistedFactory.create(isTest) as T
+                }
+            }
     }
 }

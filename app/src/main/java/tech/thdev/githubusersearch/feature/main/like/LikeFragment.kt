@@ -7,61 +7,33 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import tech.thdev.githubusersearch.R
-import tech.thdev.githubusersearch.data.GitHubSearchRepositoryImpl
-import tech.thdev.githubusersearch.database.GitHubDatabase
 import tech.thdev.githubusersearch.databinding.FragmentLikeBinding
-import tech.thdev.githubusersearch.domain.GitHubSearchRepository
 import tech.thdev.githubusersearch.feature.main.LikeChangeViewModel
 import tech.thdev.githubusersearch.feature.main.adapter.UserRecyclerAdapter
 import tech.thdev.githubusersearch.feature.main.model.MainListUiState
-import tech.thdev.githubusersearch.network.RetrofitFactory
 
+@AndroidEntryPoint
 class LikeFragment : Fragment() {
 
-    private val gitHubSearchRepository: GitHubSearchRepository by lazy {
-        GitHubSearchRepositoryImpl.getInstance(
-            gitHubApi = RetrofitFactory.gitHubApi,
-            gitHubUserDao = GitHubDatabase.getInstance(requireActivity().application).gitHubUserDao(),
-        )
+    @Inject
+    lateinit var userRecyclerAdapter: UserRecyclerAdapter
+
+    @Inject
+    lateinit var likeViewModelFactory: LikeViewModel.LikeAssistedFactory
+
+    private val likeViewModel by viewModels<LikeViewModel> {
+        LikeViewModel.provideFactory(likeViewModelFactory, false)
     }
 
-    private val userRecyclerAdapter: UserRecyclerAdapter by lazy {
-        UserRecyclerAdapter()
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    private val likeViewModel by viewModels<LikeViewModel>(
-        factoryProducer = {
-            object : ViewModelProvider.Factory {
-                override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return LikeViewModel(
-                        gitHubSearchRepository = gitHubSearchRepository,
-                    ) as T
-                }
-            }
-        }
-    )
-
-    @Suppress("UNCHECKED_CAST")
-    private val likeChangeViewModel by viewModels<LikeChangeViewModel>(
-        factoryProducer = {
-            object : ViewModelProvider.Factory {
-                override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return LikeChangeViewModel(
-                        gitHubSearchRepository = gitHubSearchRepository,
-                    ) as T
-                }
-            }
-        }
-    )
+    private val likeChangeViewModel by viewModels<LikeChangeViewModel>()
 
     private var _binding: FragmentLikeBinding? = null
     private val binding: FragmentLikeBinding

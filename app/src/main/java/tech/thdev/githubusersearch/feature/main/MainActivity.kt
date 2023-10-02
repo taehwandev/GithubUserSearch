@@ -21,12 +21,14 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import tech.thdev.githubusersearch.R
 import tech.thdev.githubusersearch.databinding.ActivityMainBinding
 import tech.thdev.githubusersearch.domain.model.GitHubSortType
 import tech.thdev.githubusersearch.util.animationStart
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val searchQueryViewModel by viewModels<SearchQueryViewModel>()

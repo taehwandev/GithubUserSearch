@@ -1,6 +1,8 @@
 package tech.thdev.githubusersearch.feature.main
 
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -8,7 +10,8 @@ import tech.thdev.githubusersearch.R
 import tech.thdev.githubusersearch.domain.model.GitHubSortType
 import tech.thdev.githubusersearch.feature.main.model.FilterStatusUiState
 
-class FilterStatusViewModel : ViewModel() {
+@HiltViewModel
+class FilterStatusViewModel @Inject constructor() : ViewModel() {
 
     private val _filterUiState = MutableStateFlow(FilterStatusUiState.Default)
     val filterUiState: StateFlow<FilterStatusUiState> get() = _filterUiState.asStateFlow()
