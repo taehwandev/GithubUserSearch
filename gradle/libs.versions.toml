@@ -49,6 +49,8 @@ androidx-lifecycle = "2.6.2"
 androidx-room = "2.5.2"
 # https://developer.android.com/jetpack/androidx/releases/navigation
 androidx-navigation = "2.7.3"
+# https://github.com/google/dagger/releases
+androidx-hilt = "2.48"
 
 ## Google
 # https://github.com/material-components/material-components-android/releases
@@ -101,6 +103,8 @@ androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room" }
 androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidx-navigation" }
 androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidx-navigation" }
+androidx-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "androidx-hilt" }
+androidx-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "androidx-hilt" }
 
 ## Google
 google-material = { module = "com.google.android.material:material", version.ref = "google-material" }
@@ -142,6 +146,7 @@ plugin-androidGradlePlugin = { module = "com.android.tools.build:gradle", versio
 [plugins]
 androidApp = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 androidLibrary = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+androidHilt = { id = "com.google.dagger.hilt.android", version.ref = "androidx-hilt" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

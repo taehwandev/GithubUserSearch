@@ -1,6 +1,6 @@
 package tech.thdev.githubusersearch.database
 
-import android.app.Application
+import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -16,10 +16,10 @@ abstract class GitHubDatabase : RoomDatabase() {
         // For Singleton instantiation
         private var instance: GitHubDatabase? = null
 
-        fun getInstance(application: Application) =
+        fun getInstance(context: Context) =
             instance ?: synchronized(this) {
                 instance ?: Room.databaseBuilder(
-                    application,
+                    context,
                     GitHubDatabase::class.java, "github.db"
                 ).build()
             }

@@ -2,6 +2,7 @@
 plugins {
     alias(libs.plugins.androidApp)
     alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.androidHilt)
     alias(libs.plugins.ksp)
     id("kotlinx-serialization")
 }
@@ -59,6 +60,8 @@ dependencies {
     implementation(libs.androidx.room)
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.hilt.android)
+    ksp(libs.androidx.hilt.android.compiler)
 
     implementation(libs.google.material)
 

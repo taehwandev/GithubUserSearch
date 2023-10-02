@@ -3,10 +3,11 @@ package tech.thdev.githubusersearch.feature.main.adapter
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import javax.inject.Inject
 import tech.thdev.githubusersearch.feature.main.adapter.holder.UserViewHolder
 import tech.thdev.githubusersearch.feature.main.model.MainListUiState
 
-class UserRecyclerAdapter : RecyclerView.Adapter<UserViewHolder>() {
+class UserRecyclerAdapter @Inject constructor() : RecyclerView.Adapter<UserViewHolder>() {
 
     private val list = mutableListOf<MainListUiState.UserItems.Info>()
 

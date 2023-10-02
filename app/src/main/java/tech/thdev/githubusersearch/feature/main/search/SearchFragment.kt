@@ -8,68 +8,39 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import tech.thdev.githubusersearch.R
-import tech.thdev.githubusersearch.data.GitHubSearchRepositoryImpl
-import tech.thdev.githubusersearch.database.GitHubDatabase
 import tech.thdev.githubusersearch.databinding.FragmentSearchBinding
-import tech.thdev.githubusersearch.domain.GitHubSearchRepository
 import tech.thdev.githubusersearch.feature.main.FilterStatusViewModel
 import tech.thdev.githubusersearch.feature.main.LikeChangeViewModel
 import tech.thdev.githubusersearch.feature.main.SearchQueryViewModel
 import tech.thdev.githubusersearch.feature.main.adapter.UserRecyclerAdapter
 import tech.thdev.githubusersearch.feature.main.model.MainListUiState
-import tech.thdev.githubusersearch.network.RetrofitFactory
 import tech.thdev.githubusersearch.util.adapterScrollLinearLayoutManagerListener
 
+@AndroidEntryPoint
 class SearchFragment : Fragment() {
 
-    private val gitHubSearchRepository: GitHubSearchRepository by lazy {
-        GitHubSearchRepositoryImpl.getInstance(
-            gitHubApi = RetrofitFactory.gitHubApi,
-            gitHubUserDao = GitHubDatabase.getInstance(requireActivity().application).gitHubUserDao(),
-        )
-    }
-
-    private val userRecyclerAdapter: UserRecyclerAdapter by lazy {
-        UserRecyclerAdapter()
-    }
+    @Inject
+    lateinit var userRecyclerAdapter: UserRecyclerAdapter
 
     private val searchQueryViewModel by activityViewModels<SearchQueryViewModel>()
-
     private val filterStatusViewModel by activityViewModels<FilterStatusViewModel>()
 
-    @Suppress("UNCHECKED_CAST")
-    private val searchViewModel by viewModels<SearchViewModel>(
-        factoryProducer = {
-            object : ViewModelProvider.Factory {
-                override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return SearchViewModel(
-                        gitHubSearchRepository = gitHubSearchRepository,
-                    ) as T
-                }
-            }
-        }
-    )
+    @Inject
+    lateinit var searchViewModelFactory: SearchViewModel.SearchAssistedFactory
 
-    @Suppress("UNCHECKED_CAST")
-    private val likeChangeViewModel by viewModels<LikeChangeViewModel>(
-        factoryProducer = {
-            object : ViewModelProvider.Factory {
-                override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return LikeChangeViewModel(
-                        gitHubSearchRepository = gitHubSearchRepository,
-                    ) as T
-                }
-            }
-        }
-    )
+    private val searchViewModel by viewModels<SearchViewModel> {
+        SearchViewModel.provideFactory(searchViewModelFactory, false)
+    }
+
+    private val likeChangeViewModel by viewModels<LikeChangeViewModel>()
 
     private val adapterScrollListener by lazy {
         adapterScrollLinearLayoutManagerListener(searchViewModel::loadMore)
