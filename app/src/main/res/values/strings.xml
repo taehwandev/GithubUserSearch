@@ -3,7 +3,8 @@
 
     <string name="title_search">Search</string>
     <string name="title_liked">Liked</string>
-    <string name="search_hint">Search github user name</string>
+    <string name="search_hint">Search github user name.</string>
+    <string name="like_hint">Empty liked list</string>
 
     <string name="message_network_error">There was a problem with the network connection.</string>
     <string name="message_unknown_error">There was a problem with unknown error.</string>

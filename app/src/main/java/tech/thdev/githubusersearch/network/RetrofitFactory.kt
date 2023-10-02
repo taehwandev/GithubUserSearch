@@ -10,7 +10,7 @@ object RetrofitFactory {
 
     const val baseUrl = "https://api.github.com"
 
-    val githubApi: GitHubApi by lazy {
+    val gitHubApi: GitHubApi by lazy {
         createRetrofit(
             json = Json {
                 coerceInputValues = true

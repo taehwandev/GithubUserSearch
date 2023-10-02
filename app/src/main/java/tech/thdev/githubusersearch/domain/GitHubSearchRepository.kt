@@ -1,20 +1,23 @@
 package tech.thdev.githubusersearch.domain
 
+import kotlinx.coroutines.flow.Flow
+import tech.thdev.githubusersearch.domain.model.GitHubSortType
 import tech.thdev.githubusersearch.domain.model.GitHubUserEntity
 
 interface GitHubSearchRepository {
 
-    suspend fun searchUser(name: String, perPage: Int): List<GitHubUserEntity>
+    fun flowLoadData(searchKeyword: String, perPage: Int): Flow<List<GitHubUserEntity>>
 
-    suspend fun getAllCacheItems(name: String): List<GitHubUserEntity>
+    fun sortList(gitHubSortType: GitHubSortType)
 
-    suspend fun searchUserLocal(name: String): List<GitHubUserEntity>
+    fun flowLoadLikedData(): Flow<List<GitHubUserEntity>>
 
+    /**
+     * 좋아요 상태 변경
+     */
     suspend fun likeUserInfo(item: GitHubUserEntity)
 
-    suspend fun getAllLocalData(): List<GitHubUserEntity>
-
-    suspend fun unlikeUserInfo(item: GitHubUserEntity)
+    suspend fun unlikeUserInfo(id: Int)
 
     fun clear()
 }

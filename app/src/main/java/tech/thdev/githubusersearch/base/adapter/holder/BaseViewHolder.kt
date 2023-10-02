@@ -1,4 +1,4 @@
-package tech.thdev.simple.adapter.holder
+package tech.thdev.githubusersearch.base.adapter.holder
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

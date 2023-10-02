@@ -8,7 +8,7 @@ import tech.thdev.githubusersearch.data.model.GitHubUserResponse
 interface GitHubApi {
 
     /**
-     * Github user search api - https://developer.github.com/v3/search/#search-users
+     * Github user search api - https://docs.github.com/en/free-pro-team@latest/rest/search/search?apiVersion=2022-11-28#search-code
      * Find users via various criteria. This method returns up to 100 results per page.
      *
      * @param q     String : Required. The search terms.
@@ -19,7 +19,7 @@ interface GitHubApi {
      */
     @GET("/search/users?")
     suspend fun searchUser(
-        @Query(value = "q", encoded = true) userKeyword: String,
+        @Query(value = "q", encoded = true) searchKeyword: String,
         @Query("page") page: Int,
         @Query("per_page") perPage: Int,
     ): GitHubUserResponse

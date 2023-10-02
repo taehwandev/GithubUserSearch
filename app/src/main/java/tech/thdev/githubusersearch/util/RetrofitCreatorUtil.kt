@@ -15,7 +15,8 @@ private const val REQUEST_TIME_OUT = 60L
 
 inline fun createRetrofit(
     json: Json,
-    baseUrl: String, noinline isInternetAvailable: () -> Boolean
+    baseUrl: String,
+    noinline isInternetAvailable: () -> Boolean,
 ): Retrofit =
     Retrofit.Builder()
         .baseUrl(baseUrl)
@@ -23,21 +24,24 @@ inline fun createRetrofit(
         .client(createOkHttpClient(isInternetAvailable))
         .build()
 
-fun createOkHttpClient(isInternetAvailable: () -> Boolean): OkHttpClient =
+fun createOkHttpClient(
+    isInternetAvailable: () -> Boolean,
+): OkHttpClient =
     OkHttpClient.Builder().apply {
-        addInterceptor(HttpLoggingInterceptor(HttpLoggingInterceptor.Logger {
-            // println log tag name is "API"
+        addInterceptor(HttpLoggingInterceptor {
             println(it)
-        }).setLevel(HttpLoggingInterceptor.Level.BODY))
+        }.setLevel(HttpLoggingInterceptor.Level.BODY))
         connectTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)
         readTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)
         writeTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)
         addInterceptor(networkCheckInterceptor(isInternetAvailable))
     }.build()
 
-fun networkCheckInterceptor(isInternetAvailable: () -> Boolean) = Interceptor { chain ->
+fun networkCheckInterceptor(
+    isInternetAvailable: () -> Boolean,
+) = Interceptor { chain ->
     chain.run {
-        if (!isInternetAvailable()) {
+        if (isInternetAvailable().not()) {
             throw NoNetworkException("Is not available network!!!")
         }
         proceed(chain.request())

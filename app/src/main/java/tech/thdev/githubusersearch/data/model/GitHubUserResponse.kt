@@ -5,9 +5,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GitHubUserResponse(
-    @SerialName("total_count") val totalCount: Int,
-    @SerialName("incomplete_results") val incompleteResults: Boolean,
-    @SerialName("items") val items: MutableList<GitHubUserInfoResponse>,
+    @SerialName("total_count") val totalCount: Int = 0,
+    @SerialName("incomplete_results") val incompleteResults: Boolean = false,
+    @SerialName("items") val items: List<GitHubUserInfoResponse> = emptyList(),
 )
 
 @Serializable

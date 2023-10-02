@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.androidApp)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.ksp)
+    id("kotlinx-serialization")
 }
 
 android {
@@ -35,6 +36,9 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    tasks.withType<Test>() {
+        useJUnitPlatform()
+    }
 }
 
 dependencies {
@@ -46,10 +50,13 @@ dependencies {
     implementation(libs.androidx.appCompat)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.fragment)
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
     implementation(libs.androidx.recyclerView)
     implementation(libs.androidx.constraintLayout)
     implementation(libs.androidx.core)
     implementation(libs.androidx.lifecycle.viewModel)
+    implementation(libs.androidx.room)
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
 
@@ -62,5 +69,15 @@ dependencies {
 
     implementation(libs.glide)
 
-    implementation(project(":baseadapter"))
+    libs.test.run {
+        testImplementation(androidx.core)
+        testImplementation(androidx.runner)
+        testImplementation(androidx.junit)
+        testImplementation(mockito.kotlin)
+        testImplementation(junit5)
+        testImplementation(junit5.engine)
+        testRuntimeOnly(junit5.vintage)
+        testImplementation(coroutines)
+        testImplementation(coroutines.turbine)
+    }
 }
