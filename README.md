@@ -27,6 +27,8 @@ all library info : [libs.versions.toml](gradle/libs.versions.toml)
     - RecyclerView
 - async
     - Coroutines
+- DI
+    - Hilt
 - Image loader
     - glide
 - Test
