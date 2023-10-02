@@ -20,7 +20,4 @@ interface GitHubUserDao {
 
     @Query("DELETE FROM gitHubUser where id = :id")
     suspend fun deleteUser(id: Int)
-
-    @Query("DELETE FROM gitHubUser")
-    suspend fun deleteAll()
 }
