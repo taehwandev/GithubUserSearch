@@ -10,14 +10,6 @@ Search page and liked page
 |:-------------------------------:|:-------------------------------:|
 | ![main](images/search_page.png) | ![detail](images/like_page.png) |
 
-# Sample list
-
-|           Sample name           |     link     |
-|:-------------------------------:|:-------------------------------:|
-| MVVM + Navigation + coroutines example / Manual dependency injection. | [link](https://github.com/taehwandev/GithubUserSearch/tree/MVVM-ManualDependencyInjection-coroutines-sample) |
-| MVVM + Navigation + RxJava example / Manual dependency injection. | [link](https://github.com/taehwandev/GithubUserSearch/tree/MVVM-ManualDependencyInjection-coroutines-sample) |
-
-
 # Architecture
 
 MVVM patten and Manual dependency injection.
