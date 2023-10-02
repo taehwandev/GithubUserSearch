@@ -12,7 +12,7 @@ Search page and liked page
 
 # Architecture
 
-MVVM patten
+MVVM patten and Manual dependency injection.
 
 ![architecture](images/architecture.webp)
 
