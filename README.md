@@ -15,7 +15,7 @@ Search page and liked page
 |           Sample name           |     link     |
 |:-------------------------------:|:-------------------------------:|
 | MVVM + Navigation + coroutines example / Manual dependency injection. | [link](https://github.com/taehwandev/GithubUserSearch/tree/MVVM-ManualDependencyInjection-coroutines-sample) |
-| MVVM + Navigation + RxJava example / Manual dependency injection. | [link](https://github.com/taehwandev/GithubUserSearch/tree/rxjava-sample) |
+| MVVM + Navigation + RxJava example / Manual dependency injection. | [link](https://github.com/taehwandev/GithubUserSearch/tree/MVVM-ManualDependencyInjection-coroutines-sample) |
 
 
 # Architecture
