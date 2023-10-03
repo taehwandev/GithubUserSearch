@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import javax.inject.Named
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,22 +22,20 @@ import tech.thdev.githubusersearch.domain.GitHubSearchRepository
 import tech.thdev.githubusersearch.domain.model.GitHubSortType
 import tech.thdev.githubusersearch.feature.main.model.MainListUiState
 import tech.thdev.githubusersearch.feature.main.model.convert.convert
+import javax.inject.Named
 
 class SearchViewModel @AssistedInject constructor(
     private val gitHubSearchRepository: GitHubSearchRepository,
     @Assisted isTest: Boolean = false,
 ) : ViewModel() {
 
-    @AssistedFactory
-    interface SearchAssistedFactory {
-
-        fun create(@Named("is_test") isTest: Boolean): SearchViewModel
-    }
+    private val _searchQuery = MutableStateFlow("")
+    val searchQuery: StateFlow<String> get() = _searchQuery.asStateFlow()
 
     private val _showProgress = MutableStateFlow(false)
     val showProgress: StateFlow<Boolean> get() = _showProgress.asStateFlow()
 
-    private val _mainListUiState = MutableStateFlow<MainListUiState>(MainListUiState.UserItems.Default)
+    private val _mainListUiState = MutableStateFlow<MainListUiState>(MainListUiState.Empty.Default)
     val mainListUiState: StateFlow<MainListUiState> get() = _mainListUiState.asStateFlow()
 
     @VisibleForTesting
@@ -85,7 +82,7 @@ class SearchViewModel @AssistedInject constructor(
             .retry {
                 loadData.value = false
                 _showProgress.value = false
-                _mainListUiState.value = MainListUiState.Error(message = it.message)
+                _mainListUiState.value = MainListUiState.Empty(message = it.message)
                 true
             }
 
@@ -104,8 +101,18 @@ class SearchViewModel @AssistedInject constructor(
         }
     }
 
+    fun setSearchQuery(query: String?) {
+        _searchQuery.tryEmit(query ?: "")
+    }
+
     override fun onCleared() {
         gitHubSearchRepository.clear()
+    }
+
+    @AssistedFactory
+    interface SearchAssistedFactory {
+
+        fun create(@Named("is_test") isTest: Boolean): SearchViewModel
     }
 
     companion object {

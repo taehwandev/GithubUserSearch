@@ -19,6 +19,9 @@ android {
         versionName = "${libs.versions.major.get()}.${libs.versions.minor.get()}.${libs.versions.hotfix.get()}"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     buildTypes {
@@ -39,6 +42,17 @@ android {
     }
     tasks.withType<Test> {
         useJUnitPlatform()
+    }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.compose.compilerVersion.get()
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
     }
 }
 
@@ -62,6 +76,7 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.hilt.android)
     ksp(libs.androidx.hilt.android.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
 
     implementation(libs.google.material)
 
@@ -70,7 +85,21 @@ dependencies {
     implementation(libs.network.okhttp)
     implementation(libs.network.okhttp.logging)
 
-    implementation(libs.glide)
+    implementation(libs.compose.activity)
+    implementation(libs.compose.ui)
+    implementation(libs.compose.foundation)
+    implementation(libs.compose.material3)
+    implementation(libs.compose.runtime)
+    implementation(libs.compose.uiToolingPreview)
+    implementation(libs.compose.constraintLayout)
+    implementation(libs.compose.animation)
+    implementation(libs.coil)
+    implementation(libs.androidx.lifecycleRuntimeCompose)
+
+    implementation(libs.compose.keyboardState)
+    implementation(libs.kotlin.collectionsImmutable)
+
+    debugRuntimeOnly(libs.compose.uiTooling)
 
     libs.test.run {
         testImplementation(androidx.core)

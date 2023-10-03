@@ -6,7 +6,6 @@ import tech.thdev.githubusersearch.R
 import tech.thdev.githubusersearch.base.adapter.holder.BaseViewHolder
 import tech.thdev.githubusersearch.databinding.ItemUserBinding
 import tech.thdev.githubusersearch.feature.main.model.MainListUiState
-import tech.thdev.githubusersearch.util.loadUrl
 
 class UserViewHolder(
     parent: ViewGroup,
@@ -21,7 +20,7 @@ class UserViewHolder(
     }
 
     override fun onBind(item: MainListUiState.UserItems.Info) {
-        binding.imgUserPicture.loadUrl(item.avatarUrl, R.drawable.ic_launcher_foreground)
+//        binding.imgUserPicture.loadUrl(item.avatarUrl, R.drawable.ic_launcher_foreground)
         binding.tvUserName.text = item.login
         binding.tvUserScore.text = binding.root.context.getString(R.string.message_user_score, item.score)
         binding.imgUserLike.isSelected = item.isLike

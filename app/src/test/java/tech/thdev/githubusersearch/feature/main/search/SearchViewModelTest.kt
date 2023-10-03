@@ -122,7 +122,7 @@ class SearchViewModelTest {
 
         viewModel.loadData()
             .test {
-                val convert = MainListUiState.Error("message")
+                val convert = MainListUiState.Empty("message")
                 Assertions.assertEquals(convert, viewModel.mainListUiState.value)
 
                 verify(gitHubSearchRepository).flowLoadData(

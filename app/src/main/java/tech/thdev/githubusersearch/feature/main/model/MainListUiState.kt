@@ -1,13 +1,33 @@
 package tech.thdev.githubusersearch.feature.main.model
 
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
+
+@Stable
 sealed interface MainListUiState {
 
-    data class Error(val message: String?) : MainListUiState
+    @Immutable
+    data object Loading : MainListUiState
 
+    @Immutable
+    data class Empty(val message: String?) : MainListUiState {
+
+        companion object {
+
+            val Default = Empty(
+                message = null,
+            )
+        }
+    }
+
+    @Immutable
     data class UserItems(
-        val items: List<Info>,
+        val items: PersistentList<Info>,
     ) : MainListUiState {
 
+        @Immutable
         data class Info(
             val id: Int,
             val login: String,
@@ -31,7 +51,7 @@ sealed interface MainListUiState {
         companion object {
 
             val Default = UserItems(
-                items = emptyList(),
+                items = persistentListOf(),
             )
         }
     }

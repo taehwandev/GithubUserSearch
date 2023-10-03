@@ -1,5 +1,6 @@
 package tech.thdev.githubusersearch.feature.main.model.convert
 
+import kotlinx.collections.immutable.toPersistentList
 import tech.thdev.githubusersearch.domain.model.GitHubUserEntity
 import tech.thdev.githubusersearch.feature.main.model.MainListUiState
 
@@ -13,5 +14,5 @@ internal fun List<GitHubUserEntity>.convert(): MainListUiState =
                 score = item.score,
                 isLike = item.isLike,
             )
-        }
+        }.toSet().toPersistentList()
     )

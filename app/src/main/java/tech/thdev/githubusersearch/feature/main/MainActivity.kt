@@ -4,36 +4,60 @@ import android.annotation.SuppressLint
 import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.compose.rememberNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
+import kotlinx.collections.immutable.persistentMapOf
 import tech.thdev.githubusersearch.R
 import tech.thdev.githubusersearch.databinding.ActivityMainBinding
+import tech.thdev.githubusersearch.design.system.theme.MyApplicationTheme
 import tech.thdev.githubusersearch.domain.model.GitHubSortType
+import tech.thdev.githubusersearch.feature.main.compose.MainScreen
+import tech.thdev.githubusersearch.feature.main.search.SearchViewModel
+import tech.thdev.githubusersearch.feature.main.search.compose.SearchScreen
 import tech.thdev.githubusersearch.util.animationStart
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    private val mainViewModel by viewModels<MainViewModel>()
+
     private val searchQueryViewModel by viewModels<SearchQueryViewModel>()
 
     private val filterStatusViewModel by viewModels<FilterStatusViewModel>()
+
+    @Inject
+    lateinit var searchViewModelFactory: SearchViewModel.SearchAssistedFactory
+
+    private val searchViewModel by viewModels<SearchViewModel> {
+        SearchViewModel.provideFactory(searchViewModelFactory, false)
+    }
+
+    private val likeChangeViewModel by viewModels<LikeChangeViewModel>()
 
     private val fabOpenAnimation: Animation by lazy {
         AnimationUtils.loadAnimation(this, R.anim.fab_open)
@@ -46,27 +70,81 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
-        setContentView(binding.root)
+        setContent {
+            MyApplicationTheme {
+                val navController = rememberNavController()
+                val mainUiState by mainViewModel.mainUiState.collectAsStateWithLifecycle()
 
-        val navigation: BottomNavigationView = binding.navigation
-
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        setSupportActionBar(binding.toolbar)
-        navigation.setupWithNavController(navController)
-
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                filterStatusViewModel.filterUiState
-                    .collect {
-                        hideFloatingSubMenu(filterIcon = it.icon)
+                Scaffold(
+                    topBar = {
+                        TopAppBar(
+                            title = {
+                                Text(text = "GitHubUserSearch")
+                            },
+                        )
+                    },
+                    bottomBar = {
+                        NavigationBar {
+                            mainUiState.bottomItems.forEach { item ->
+                                NavigationBarItem(
+                                    selected = item.selected,
+                                    onClick = {
+                                        mainViewModel.bottomChange(item.viewType)
+                                    },
+                                    icon = {
+                                        Icon(
+                                            painter = painterResource(id = item.icon),
+                                            contentDescription = null,
+                                        )
+                                    },
+                                    label = {
+                                        Text(text = stringResource(id = item.title))
+                                    }
+                                )
+                            }
+                        }
                     }
+                ) {
+                    MainScreen(
+                        navController = navController,
+                        hostMap = persistentMapOf(
+                            ViewType.SEARCH to {
+                                SearchScreen(
+                                    searchViewModel = searchViewModel,
+                                    likeChangeViewModel = likeChangeViewModel,
+                                )
+                            },
+                            ViewType.LIKED to {},
+                        ),
+                        modifier = Modifier
+                            .padding(it)
+                    )
+                }
             }
         }
 
-        initView()
+//        binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
+//        setContentView(binding.root)
+//
+//        val navigation: BottomNavigationView = binding.navigation
+//
+//        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+//        setSupportActionBar(binding.toolbar)
+//        navigation.setupWithNavController(navController)
+//
+//        lifecycleScope.launch {
+//            repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                filterStatusViewModel.filterUiState
+//                    .collect {
+//                        hideFloatingSubMenu(filterIcon = it.icon)
+//                    }
+//            }
+//        }
+//
+//        initView()
     }
 
     @SuppressLint("ClickableViewAccessibility")

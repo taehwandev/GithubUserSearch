@@ -53,20 +53,20 @@ class LikeFragment : Fragment() {
     private fun viewInit() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                likeViewModel.mainListUiState
-                    .onEach {
-                        when (it) {
-                            is MainListUiState.Error -> {
-                                (it.message ?: getString(R.string.message_unknown_error)).showErrorView()
-                            }
-
-                            is MainListUiState.UserItems -> {
-                                showEmptyView(it.items.isEmpty())
-                                userRecyclerAdapter.setItems(it.items)
-                            }
-                        }
-                    }
-                    .launchIn(this)
+//                likeViewModel.mainListUiState
+//                    .onEach {
+//                        when (it) {
+//                            is MainListUiState.Error -> {
+//                                (it.message ?: getString(R.string.message_unknown_error)).showErrorView()
+//                            }
+//
+//                            is MainListUiState.UserItems -> {
+//                                showEmptyView(it.items.isEmpty())
+//                                userRecyclerAdapter.setItems(it.items)
+//                            }
+//                        }
+//                    }
+//                    .launchIn(this)
             }
         }
 
