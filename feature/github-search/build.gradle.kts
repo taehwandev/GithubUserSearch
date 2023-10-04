@@ -1,27 +1,20 @@
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
-    alias(libs.plugins.androidApp)
+    alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.androidHilt)
     alias(libs.plugins.ksp)
-    id("kotlinx-serialization")
 }
 
 android {
-    namespace = "tech.thdev.githubusersearch"
+    namespace = "tech.thdev.githubusersearch.feature.github"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "tech.thdev.githubusersearch"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = libs.versions.versionCode.get().toInt()
-        versionName = "${libs.versions.major.get()}.${libs.versions.minor.get()}.${libs.versions.hotfix.get()}"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
     }
 
     buildTypes {
@@ -55,32 +48,18 @@ android {
 
 dependencies {
     implementation(libs.kotlin.stdlib)
-    implementation(libs.kotlin.serializationJson)
 
     implementation(libs.coroutines.android)
 
     implementation(libs.androidx.appCompat)
     implementation(libs.androidx.activity)
-    implementation(libs.androidx.fragment)
-    implementation(libs.androidx.navigation.fragment)
-    implementation(libs.androidx.navigation.ui)
-    implementation(libs.androidx.recyclerView)
-    implementation(libs.androidx.constraintLayout)
     implementation(libs.androidx.core)
     implementation(libs.androidx.lifecycle.viewModel)
-    implementation(libs.androidx.room)
-    implementation(libs.androidx.room.runtime)
-    ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.hilt.android)
     ksp(libs.androidx.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
     implementation(libs.google.material)
-
-    implementation(libs.network.retrofit)
-    implementation(libs.network.retrofit.kotlinxSerializationConvert)
-    implementation(libs.network.okhttp)
-    implementation(libs.network.okhttp.logging)
 
     implementation(libs.compose.activity)
     implementation(libs.compose.ui)
@@ -90,22 +69,19 @@ dependencies {
     implementation(libs.compose.uiToolingPreview)
     implementation(libs.compose.constraintLayout)
     implementation(libs.compose.animation)
-    implementation(libs.coil)
+    implementation(libs.compose.navigation)
     implementation(libs.androidx.lifecycleRuntimeCompose)
 
+    implementation(libs.coil)
     implementation(libs.compose.keyboardState)
+
     implementation(libs.kotlin.collectionsImmutable)
 
     debugRuntimeOnly(libs.compose.uiTooling)
 
     implementation(project(":core:design-system"))
-    implementation(project(":core:network"))
     implementation(project(":core:design-system"))
-    implementation(project(":core:data:github"))
     implementation(project(":core:domain:github"))
-    implementation(project(":core:database:github"))
-    implementation(project(":core:database:github-api"))
-    implementation(project(":feature:github-search"))
 
     libs.test.run {
         testImplementation(androidx.core)
