@@ -12,34 +12,34 @@ Search page and liked page
 
 # Sample list
 
-|           Sample name           |     link     |
-|:-------------------------------:|:-------------------------------:|
-| MVVM + Navigation + coroutines example / Hilt | [link](https://github.com/taehwandev/GithubUserSearch/tree/MVVM-Hilt-coroutines-sample) |
-| MVVM + Navigation + coroutines example / Manual dependency injection. | [link](https://github.com/taehwandev/GithubUserSearch/tree/MVVM-ManualDependencyInjection-coroutines-sample) |
-| MVVM + Navigation + RxJava example / Manual dependency injection. | [link](https://github.com/taehwandev/GithubUserSearch/tree/MVVM-ManualDependencyInjection-coroutines-sample) |
+|                              Sample name                               |                                                     link                                                     |
+|:----------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------:|
+| Compose example. MVVM + Compose Navigation + coroutines example / Hilt |       [link](https://github.com/taehwandev/GithubUserSearch/tree/MVVM-Compose-Hilt-coroutines-sample)        |
+|             MVVM + Navigation + coroutines example / Hilt              |           [link](https://github.com/taehwandev/GithubUserSearch/tree/MVVM-Hilt-coroutines-sample)            |
+| MVVM + Navigation + coroutines example / Manual dependency injection.  | [link](https://github.com/taehwandev/GithubUserSearch/tree/MVVM-ManualDependencyInjection-coroutines-sample) |
+|   MVVM + Navigation + RxJava example / Manual dependency injection.    | [link](https://github.com/taehwandev/GithubUserSearch/tree/MVVM-ManualDependencyInjection-coroutines-sample) |
 
+# Android Architecture
 
-# Architecture
+MVVM patten and Use Hilt, Compose
 
-MVVM patten and Manual dependency injection.
-
-![architecture](images/architecture.webp)
+![mad-arch-overview-ui.png](images/mad-arch-overview-ui.png)
 
 # Use Library
 
 all library info : [libs.versions.toml](gradle/libs.versions.toml)
 
 - UI
-    - Android navigation + fragment
+    - Android compose navigation + compose
     - AAC-ViewModel
-    - ConstrainLayout
-    - RecyclerView
+    - [Compose Floating](https://medium.com/@khambhaytajaydip/jetpack-compose-multiple-floatingactionbutton-2fe26f19404e)
+    - [Compose keyboard controller](https://github.com/taehwandev/ComposeKeyboardState)
 - async
     - Coroutines
 - DI
     - Hilt
 - Image loader
-    - glide
+    - coil
 - Test
     - Junit5
     - Coroutines test

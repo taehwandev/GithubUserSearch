@@ -2,8 +2,10 @@ package tech.thdev.githubusersearch.feature.main.compose
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -16,12 +18,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import kotlinx.collections.immutable.PersistentMap
 import kotlinx.collections.immutable.persistentMapOf
+import tech.thdev.compose.extensions.keyboard.state.MutableExKeyboardStateSource
+import tech.thdev.compose.extensions.keyboard.state.foundation.removeFocusWhenKeyboardIsHidden
+import tech.thdev.compose.extensions.keyboard.state.localowners.LocalMutableExKeyboardStateSourceOwner
 import tech.thdev.githubusersearch.feature.main.MainViewModel
 import tech.thdev.githubusersearch.feature.main.ViewType
 
 @Composable
 internal fun MainScreen(
-    modifier: Modifier,
     hostMap: PersistentMap<ViewType, @Composable () -> Unit>,
     navController: NavHostController = rememberNavController(),
     mainViewModel: MainViewModel = hiltViewModel(),
@@ -29,7 +33,6 @@ internal fun MainScreen(
     val selectNavigation by mainViewModel.selectNavigation.collectAsStateWithLifecycle()
 
     MainScreen(
-        modifier = modifier,
         hostMap = hostMap,
         navController = navController,
         selectNavigation = selectNavigation,
@@ -38,7 +41,6 @@ internal fun MainScreen(
 
 @Composable
 private fun MainScreen(
-    modifier: Modifier,
     selectNavigation: ViewType,
     hostMap: PersistentMap<ViewType, @Composable () -> Unit>,
     navController: NavHostController = rememberNavController(),
@@ -56,11 +58,19 @@ private fun MainScreen(
         exitTransition = {
             ExitTransition.None
         },
-        modifier = modifier
     ) {
         hostMap.forEach { (viewType, view) ->
             composable(viewType.name) {
-                view()
+                CompositionLocalProvider(
+                    LocalMutableExKeyboardStateSourceOwner provides MutableExKeyboardStateSource()
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .removeFocusWhenKeyboardIsHidden()
+                    ) {
+                        view()
+                    }
+                }
             }
         }
     }
@@ -82,6 +92,5 @@ internal fun PreviewMainScreen() {
                 Text(ViewType.LIKED.name)
             },
         ),
-        modifier = Modifier
     )
 }
