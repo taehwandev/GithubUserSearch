@@ -12,12 +12,13 @@ Search page and liked page
 
 # Sample list
 
-|                              Sample name                               |                                                     link                                                     |
-|:----------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------:|
-| Compose example. MVVM + Compose Navigation + coroutines example / Hilt |       [link](https://github.com/taehwandev/GithubUserSearch/tree/MVVM-Compose-Hilt-coroutines-sample)        |
-|             MVVM + Navigation + coroutines example / Hilt              |           [link](https://github.com/taehwandev/GithubUserSearch/tree/MVVM-Hilt-coroutines-sample)            |
-| MVVM + Navigation + coroutines example / Manual dependency injection.  | [link](https://github.com/taehwandev/GithubUserSearch/tree/MVVM-ManualDependencyInjection-coroutines-sample) |
-|   MVVM + Navigation + RxJava example / Manual dependency injection.    | [link](https://github.com/taehwandev/GithubUserSearch/tree/MVVM-ManualDependencyInjection-rxjava-sample) |
+|      View Type       | Module |       Async       |             DI              |     Architecture     |                                                     link                                                     |
+|:--------------------:|:------:|:-----------------:|:---------------------------:|:--------------------:|:------------------------------------------------------------------------------------------------------------:|
+| Compose + Navigation |   O    | coroutines + flow |            Hilt             | Android Architecture | [link](https://github.com/taehwandev/GithubUserSearch/tree/MVVM-Compose-Hilt-coroutines-Split-Module-sample) |
+| Compose + Navigation |   X    | coroutines + flow |            Hilt             | Android Architecture |       [link](https://github.com/taehwandev/GithubUserSearch/tree/MVVM-Compose-Hilt-coroutines-sample)        |
+|   XML + Navigation   |   X    | coroutines + flow |            Hilt             | Android Architecture |           [link](https://github.com/taehwandev/GithubUserSearch/tree/MVVM-Hilt-coroutines-sample)            |
+|   XML + Navigation   |   X    | coroutines + flow | Manual dependency injection |         MVVM         | [link](https://github.com/taehwandev/GithubUserSearch/tree/MVVM-ManualDependencyInjection-coroutines-sample) |
+|   XML + Navigation   |   X    |      RxJava3      | Manual dependency injection |         MVVM         |   [link](https://github.com/taehwandev/GithubUserSearch/tree/MVVM-ManualDependencyInjection-rxjava-sample)   |
 
 # Android Architecture
 
