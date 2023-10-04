@@ -10,15 +10,6 @@ Search page and liked page
 |:-------------------------------:|:-------------------------------:|
 | ![main](images/search_page.png) | ![detail](images/like_page.png) |
 
-# Sample list
-
-|                              Sample name                               |                                                     link                                                     |
-|:----------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------:|
-| Compose example. MVVM + Compose Navigation + coroutines example / Hilt |       [link](https://github.com/taehwandev/GithubUserSearch/tree/MVVM-Compose-Hilt-coroutines-sample)        |
-|             MVVM + Navigation + coroutines example / Hilt              |           [link](https://github.com/taehwandev/GithubUserSearch/tree/MVVM-Hilt-coroutines-sample)            |
-| MVVM + Navigation + coroutines example / Manual dependency injection.  | [link](https://github.com/taehwandev/GithubUserSearch/tree/MVVM-ManualDependencyInjection-coroutines-sample) |
-|   MVVM + Navigation + RxJava example / Manual dependency injection.    | [link](https://github.com/taehwandev/GithubUserSearch/tree/MVVM-ManualDependencyInjection-coroutines-sample) |
-
 # Android Architecture
 
 MVVM patten and Use Hilt, Compose
