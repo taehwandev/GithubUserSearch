@@ -17,6 +17,8 @@ androidGradlePlugin = "8.1.2"
 kotlin = "1.9.10"
 # https://github.com/Kotlin/kotlinx.serialization
 kotlinSerializationJson = "1.6.0"
+# https://github.com/Kotlin/kotlinx.collections.immutable
+kotlinxCollectionsImmutable = "0.3.5"
 
 ## Coroutine
 # https://github.com/Kotlin/kotlinx.coroutines
@@ -51,6 +53,24 @@ androidx-room = "2.5.2"
 androidx-navigation = "2.7.3"
 # https://github.com/google/dagger/releases
 androidx-hilt = "2.48"
+# https://developer.android.com/jetpack/androidx/releases/hilt
+androidx-hilt-compose = "1.1.0-alpha01"
+
+## Compose
+# https://developer.android.com/jetpack/androidx/releases/compose
+compose = "1.6.0-alpha06"
+# https://developer.android.com/jetpack/androidx/releases/compose-kotlin
+compose-compilerVersion = "1.5.3"
+# https://developer.android.com/jetpack/androidx/releases/compose-material3
+compose-material3 = "1.2.0-alpha08"
+# https://developer.android.com/jetpack/androidx/releases/navigation
+compose-navigation = "2.6.0"
+# https://developer.android.com/jetpack/androidx/releases/constraintlayout
+compose-constraintLayout = "1.1.0-alpha12"
+
+## thdev
+# https://github.com/taehwandev/ComposeKeyboardState
+compose-keyboardState = "1.6.0-alpha06"
 
 ## Google
 # https://github.com/material-components/material-components-android/releases
@@ -65,8 +85,9 @@ network-retrofit = "2.9.0"
 network-retrofit-kotlinxSerializationConvert = "1.0.0"
 
 ## ImageLoader
-# https://github.com/bumptech/glide
-glide = "4.16.0"
+## Coil
+# https://coil-kt.github.io/coil/
+coil = "2.4.0"
 
 ## Test
 # https://developer.android.com/jetpack/androidx/releases/test
@@ -84,6 +105,7 @@ test-junit5 = "5.9.3"
 ## Kotlin
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 kotlin-serializationJson = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinSerializationJson" }
+kotlin-collectionsImmutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinxCollectionsImmutable" }
 
 ## Coroutines
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
@@ -98,6 +120,7 @@ androidx-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "
 androidx-recyclerView = { module = "androidx.recyclerview:recyclerview", version.ref = "androidx-recyclerView" }
 androidx-constraintLayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx-constraintLayout" }
 androidx-lifecycle-viewModel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle" }
+androidx-lifecycleRuntimeCompose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 androidx-room = { module = "androidx.room:room-ktx", version.ref = "androidx-room" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidx-room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room" }
@@ -105,6 +128,19 @@ androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragme
 androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidx-navigation" }
 androidx-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "androidx-hilt" }
 androidx-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "androidx-hilt" }
+androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidx-hilt-compose" }
+
+## Compose
+compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
+compose-uiTooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
+compose-uiToolingPreview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
+compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
+compose-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "compose" }
+compose-animation = { module = "androidx.compose.animation:animation", version.ref = "compose" }
+compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "compose-material3" }
+compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "compose-navigation" }
+compose-constraintLayout = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "compose-constraintLayout" }
+compose-activity = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
 
 ## Google
 google-material = { module = "com.google.android.material:material", version.ref = "google-material" }
@@ -116,7 +152,11 @@ network-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "
 network-retrofit-kotlinxSerializationConvert = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "network-retrofit-kotlinxSerializationConvert" }
 
 ## Image loader
-glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+## coil
+coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+
+## thdev
+compose-keyboardState = { module = "tech.thdev:extensions-compose-keyboard-state", version.ref = "compose-keyboardState" }
 
 
 ## Test
