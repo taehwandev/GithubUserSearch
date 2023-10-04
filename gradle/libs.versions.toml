@@ -64,7 +64,7 @@ compose-compilerVersion = "1.5.3"
 # https://developer.android.com/jetpack/androidx/releases/compose-material3
 compose-material3 = "1.2.0-alpha08"
 # https://developer.android.com/jetpack/androidx/releases/navigation
-compose-navigation = "2.6.0"
+compose-navigation = "2.7.3"
 # https://developer.android.com/jetpack/androidx/releases/constraintlayout
 compose-constraintLayout = "1.1.0-alpha12"
 
@@ -100,6 +100,8 @@ test-mockito = "5.5.0"
 test-mockito-kotlin = "5.1.0"
 # https://github.com/mannodermaus/android-junit5
 test-junit5 = "5.9.3"
+junit = "4.13.2"
+espresso-core = "3.5.1"
 
 [libraries]
 ## Kotlin
@@ -182,6 +184,8 @@ test-coroutines-turbine = { module = "app.cash.turbine:turbine", version.ref = "
 plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 plugin-kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
 plugin-androidGradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "androidGradlePlugin" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
 
 [plugins]
 androidApp = { id = "com.android.application", version.ref = "androidGradlePlugin" }
